@@ -11,9 +11,11 @@ from logbook import create_app
 
 # WARNING: Don't run with debug turned on in production!
 DEBUG = (os.getenv('DEBUG', 'False') == 'True')
+print(f'debug mode: {DEBUG}')
 
 # The configuration
 get_config_mode = 'Debug' if DEBUG else 'Production'
+print(f'config mode: {get_config_mode}')
 
 try:
 
@@ -26,7 +28,7 @@ except KeyError:
 app = create_app(app_config)
 
 if not DEBUG:
-    app.logger.info('Page Compression = ' + 'FALSE' if DEBUG else 'TRUE' )
+    app.logger.info('Page Compression = ' + 'TRUE' )
     app.logger.info('DBMS             = ' + app_config.SQLALCHEMY_DATABASE_URI)
     app.logger.info('ASSETS_ROOT      = ' + app_config.ASSETS_ROOT )
     
@@ -35,3 +37,4 @@ if DEBUG:
     app.logger.info('Page Compression = ' + 'FALSE' if DEBUG else 'TRUE' )
     app.logger.info('DBMS             = ' + app_config.SQLALCHEMY_DATABASE_URI)
     app.logger.info('ASSETS_ROOT      = ' + app_config.ASSETS_ROOT )
+
