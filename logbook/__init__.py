@@ -3,7 +3,6 @@
 Copyright (c) 2019 - present AppSeed.us
 """
 
-#import psycopg2
 from dotenv import load_dotenv
 from importlib import import_module
 
@@ -39,12 +38,6 @@ def configure_database(app):
             db.create_all()
     else:
         # remote database
-        """
-        import logbook.database as ldb
-        connection = psycopg2.connect(app.config.get('SQLALCHEMY_DATABASE_URI'))
-        ldb.create_tables(connection)
-        """
-        #from logbook.authentication.models import User
         with app.app_context():
             db.create_all()
     

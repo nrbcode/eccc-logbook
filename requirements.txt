@@ -7,3 +7,4 @@ flask-sqlalchemy
 flask-bcrypt
 email_validator
 python-dotenv
+psycopg2
