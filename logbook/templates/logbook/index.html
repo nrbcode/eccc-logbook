@@ -1,0 +1,101 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Logbook {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <!-- [ breadcrumb ] start -->
+                    <div class="page-header">
+                        <div class="page-block">
+                            <div class="row align-items-center">
+                                {% if admin %}
+                                <div class="col-sm-9">
+                                    <div class="page-header-title">
+                                        <h5 class="m-b-10">All Logbook, All Concretors</h5>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 text-primary">Admin Logbook</div>
+                                {% else %}
+                                <div class="col-sm-9">
+                                    <div class="page-header-title">
+                                        <h5 class="m-b-10">My Logbook</h5>
+                                    </div>
+                                </div>
+                                <div class="col-sm-3">
+                                    <a type="button" href={{ url_for('activity_blueprint.new_logbook_entry') }} class="btn btn-primary" title="add new entry to your logbook" data-toggle="tooltip">New Entry</a>
+                                </div>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ breadcrumb ] end -->
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+
+                                <!-- [ basic-table ] start -->
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>LOGBOOOK</h5>
+                                            <span class="d-block m-t-5">A record of work activities with risk of RCS exposure.</span>
+                                        </div>
+                                        <div class="card-block table-border-style">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Entry ID</th>
+                                                            {% if admin %}
+                                                            <th>Concretor ID</th>
+                                                            {% endif %}
+                                                            <th>Job Site</th>
+                                                            <th>Job Date</th>
+                                                            <th>Activity</th>
+                                                            <th>Duration</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        {% for entry in entries %}
+                                                        <tr>
+                                                            <th scope="row">{{ entry.id }}</th>
+                                                            {% if admin %}
+                                                            <td>{{ entry.concretor_id }}</td>
+                                                            {% endif %}
+                                                            <td>{{ entry.site }}</td>
+                                                            <td>{{ entry.display_date() }}</td>
+                                                            <td>{{ entry.activity }}</td>
+                                                            <td>{{ entry.duration }}</td>
+                                                        </tr>
+                                                        {% endfor %}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- [ basic-table ] end -->
+                                
+                            </div>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

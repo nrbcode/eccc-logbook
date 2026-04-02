@@ -1,0 +1,54 @@
+<!-- [ navigation menu ] start -->
+<nav class="pcoded-navbar">
+    <div class="navbar-wrapper">
+        <div class="navbar-brand header-logo">
+            <a href="/" class="b-brand">
+                <div class="b-bg">
+                    <i class="feather icon-check-square"></i>
+                </div>
+                <span class="b-title">RCS Logbook</span>
+            </a>
+            <a class="mobile-menu" id="mobile-collapse" href="javascript:"><span></span></a>
+        </div>
+        <div class="navbar-content scroll-div">
+            <ul class="nav pcoded-inner-navbar">
+                <li class="nav-item pcoded-menu-caption">
+                    <label>Concretor Pages</label>
+                </li>
+                <li data-username="logbook table datatable entry entries"
+                    class="nav-item {% if 'logbook' in segment %} active {% endif %}">
+                    <a href={{ url_for('activity_blueprint.my_logbook') }} class="nav-link " >
+                        <span class="pcoded-micon"><i class="feather icon-server"></i></span>
+                        <span class="pcoded-mtext">My Logbook</span>
+                    </a>
+                </li>
+                <li data-username="profile page"
+                    class="nav-item {% if 'profile' in segment %} active {% endif %}">
+                    <a href={{ url_for('activity_blueprint.my_profile') }} class="nav-link" >
+                        <span class="pcoded-micon"><i class="feather icon-user"></i></span>
+                        <span class="pcoded-mtext">My Profile</span>
+                    </a>
+                </li>
+                <li data-username="Disabled Menu" class="nav-item">
+                    <a href="{{ url_for('authentication_blueprint.logout') }}" class="nav-link" >
+                        <span class="pcoded-micon"><i class="feather icon-power"></i></span>
+                        <span class="pcoded-mtext">Logout</span>
+                    </a>
+                </li>
+                <li class="nav-item pcoded-menu-caption">
+                    <label>Admin Pages</label>
+                </li>
+                <li data-username="admin database actions"
+                    class="nav-item pcoded-hasmenu">
+                    <a href="javascript:" class="nav-link ">
+                        <span class="pcoded-micon"><i class="feather icon-lock"></i></span><span class="pcoded-mtext">Admin Pages</span>
+                    </a>
+                    <ul class="pcoded-submenu">
+                        <li class=""><a href={{ url_for('activity_blueprint.view_logbook') }}>Logbook</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<!-- [ navigation menu ] end -->

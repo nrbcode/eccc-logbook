@@ -1,2 +1,9 @@
 Flask
 Gunicorn
+WTForms
+flask-login
+flask_wtf
+flask-sqlalchemy
+flask-bcrypt
+email_validator
+python-dotenv
