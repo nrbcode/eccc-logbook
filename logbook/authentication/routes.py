@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-""" logbook/authentication/routes """
+""" logbook/authentication/ """
 
 from flask import render_template, redirect, request, url_for
 
@@ -52,7 +52,7 @@ def login():
 
         # if user not found
         if not user:
-            return render_template( 'accounts/login.html',
+            return render_template( 'home/landing.html',
                                    msg='Unknown User or Email',
                                    form=login_form)
 
@@ -61,12 +61,10 @@ def login():
         if bc.check_password_hash(ph, p):
         
             login_user(user)
-            print("user logged in!")
             return redirect(url_for('activity_blueprint.my_logbook'))
 
         # Something (user or pass) is not ok
-        print("user NOT logged in!")
-        return render_template('accounts/login.html',
+        return render_template( 'home/landing.html',
                                msg='Wrong user or password',
                                form=login_form)
 
@@ -87,7 +85,7 @@ def register():
         # Check username exists
         user = db.session.scalar(db.select(User).where(User.username == u))
         if user is not None:
-            return render_template('accounts/register.html',
+            return render_template( 'accounts/register.html',
                                    msg='Username already registered',
                                    success=False,
                                    form=create_account_form)
@@ -95,7 +93,7 @@ def register():
         # Check email exists
         user = db.session.scalar(db.select(User).where(User.email == e))
         if user is not None:
-            return render_template('accounts/register.html',
+            return render_template( 'accounts/register.html',
                                    msg='Email already registered',
                                    success=False,
                                    form=create_account_form)
@@ -109,7 +107,7 @@ def register():
         # Delete user from session
         logout_user()
 
-        return render_template('accounts/register.html',
+        return render_template( 'accounts/register.html',
                                msg='User created successfully.',
                                form=create_account_form,
                                success=True

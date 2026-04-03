@@ -1,12 +1,12 @@
 CONTROL_MEASURES = [
-    'Safe access and egress to the work area.',
-    'Appropriate training.',
-    'Correct Personal Protective Equipment (PPE).',
-    'Lighting levels appropriate for work tasks.',
-    'Tidy work area.',
+    'Safe access and egress',
+    'Appropriate training',
+    'Correct PPE',
+    'Lighting levels appropriate',
+    'Tidy work area',
     'Adequate natural ventilation.',
     'Tools are safe and ready for use.',
-    'Due consideration has been given to the work of other groups in the vicinity.',
+    'Due consideration to other groups',
 ]
 
 CONTROLS_ACTIVITIES = {
