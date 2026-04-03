@@ -9,17 +9,20 @@ CONTROL_MEASURES = [
     'Due consideration has been given to the work of other groups in the vicinity.',
 ]
 
-COURSE_LIST = [
-    "Elevated Work Platform",
-    "First Aid",
-    "Workplace Impairment Training",
-    "Respirable Crystalline Silica Awareness",
-    "Health and Safety Representative",
-    "Electrical Test and Tag"
-]
+CONTROLS_ACTIVITIES = {
+    'Safe access and egress to the work area.': ["drill", "jackhammer", "hand-grinder"],
+    'Appropriate training.': ["drill", "jackhammer", "hand-grinder", "floor-grinder"],
+    'Correct Personal Protective Equipment (PPE).': ["drill", "jackhammer", "hand-grinder", "floor-grinder"],
+    'Lighting levels appropriate for work tasks.': ["drill", "jackhammer", "hand-grinder", "floor-grinder"],
+    'Tidy work area.': ["drill", "hand-grinder", "floor-grinder"],
+    'Adequate natural ventilation.': ["jackhammer", "hand-grinder", "floor-grinder"],
+    'Tools are safe and ready for use.': ["drill", "jackhammer", "hand-grinder", "floor-grinder"],
+    'Due consideration has been given to the work of other groups in the vicinity.': ["jackhammer", "hand-grinder", "floor-grinder"]
+    }
+    
 
 ACTIVITIES_CONTROLS = {
-    "drill into concrete": [
+    "drill": [
         "Safe access and egress to the work area.",
         "Appropriate training.",
         "Correct Personal Protective Equipment (PPE).",
@@ -29,7 +32,15 @@ ACTIVITIES_CONTROLS = {
         "Tools are safe and ready for use.",
         "Due consideration has been given to the work of other groups in the vicinity."
         ],
-    "jackhammer or scabble": [
+    "jackhammer": [
+        "Safe access and egress to the work area.",
+        "Appropriate training.",
+        "Correct Personal Protective Equipment (PPE).",
+        "Lighting levels appropriate for work tasks.",
+        "Tools are safe and ready for use.",
+        "Due consideration has been given to the work of other groups in the vicinity."
+        ],
+    "handgrinder": [
         "Safe access and egress to the work area.",
         "Appropriate training.",
         "Correct Personal Protective Equipment (PPE).",
@@ -39,17 +50,7 @@ ACTIVITIES_CONTROLS = {
         "Tools are safe and ready for use.",
         "Due consideration has been given to the work of other groups in the vicinity."
         ],
-    "grind concrete - hand grinder": [
-        "Safe access and egress to the work area.",
-        "Appropriate training.",
-        "Correct Personal Protective Equipment (PPE).",
-        "Lighting levels appropriate for work tasks.",
-        "Tidy work area.",
-        "Adequate natural ventilation.",
-        "Tools are safe and ready for use.",
-        "Due consideration has been given to the work of other groups in the vicinity."
-        ],
-    "grind concrete - walk-behind grinder": [
+    "floorgrinder": [
         "Safe access and egress to the work area.",
         "Appropriate training.",
         "Correct Personal Protective Equipment (PPE).",

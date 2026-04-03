@@ -1,5 +1,8 @@
 {% extends "layouts/base.html" %}
 
+<!-- Import macros from the forms file -->
+{% from '/logbook/form-macros.html' import form_select %}
+
 {% block title %} New Entry {% endblock %}
 
 <!-- Specific CSS goes HERE -->
@@ -45,32 +48,34 @@
                                         <div class="card-block">
                                             {{ form.hidden_tag() }}
                                             <!--datetime now: {*{ #datetimenow.strftime('%d/%m/%Y %H:%M:%S') }*}-->
-                                            <p>
-                                                Probably need to select job site from a list.
-                                            </p>
                                             <div class="row">
                                                 <div class="col-md-6">
+                                                    
                                                     <!-- jinja date control -->
                                                     <div class="form-group">
                                                         {{ form.job_date.label }} (can be back-dated)
                                                         {{ form.job_date(class="form-control", value=datetimenow.strftime('%Y-%m-%d')) }}
                                                     </div>
-                                                    <div class="form-group">
-                                                        <label for="exampleFormControlSelect1">Work Activity</label>
-                                                        <select name="job_activity" class="form-control" id="exampleFormControlSelect1">
-                                                            <option selected value="Place and finish suspended deck">Place and finish suspended deck</option>
-                                                            <option value="Prep-work for ground slab">Prep-work for ground slab</option>
-                                                            <option value="Rectification works">Rectification works</option>
-                                                            <option value="Place vertical elements">Place vertical elements</option>
-                                                            <option value="Place and finish ground slab">Place and finish ground slab</option>
-                                                        </select>
-                                                    </div>
+
+                                                    <!-- jinja form select -->
+                                                    {{
+                                                    form_select('job', 'Work Activity', [
+                                                        ('floor-grinder', 'Walk-behind Grinder'),
+                                                        ('hand-grinder', 'Hand Grinder'),
+                                                        ('drill', 'Drill into Concrete'),
+                                                        ('jackhammer', 'Jackhammer')
+                                                        ], required=true)
+                                                    }}
                                                 </div>
                                                 <div class="col-md-6">
+
+                                                    <!-- site -->
                                                     <div class="form-group">
                                                         <label>Site</label>
                                                         {{ form.job_site(placeholder="Job site", class="form-control") }}
                                                     </div>
+
+                                                    <!-- duration -->
                                                     <div class="form-control">
                                                         <label for="duration-bar">Duration</label>
                                                         <input name="job_duration" type="range" list="tickmarks" min="0" max="10" step="0.5" class="custom-range" id="duration-bar" />
@@ -86,17 +91,16 @@
                                             </div>
                                         </div>
 
+                                        <!-- checklist -->
                                         <div class="card-block">
-                                            <fieldset>
-                                                <ul class="custom-control custom-checkbox">
-                                                    {% for list_num, safety_item in checklist %}
-                                                    <li>
-                                                        <input type="checkbox" class="custom-control-input" id={{ list_num }} value={{ list_num }} name="cl">
-                                                        <label class="custom-control-label" for={{ list_num }}>{{ safety_item }}</label>
-                                                    </li>
-                                                    {% endfor %}
-                                                </ul>
-                                            </fieldset>
+                                            <ul class="custom-control custom-checkbox">
+                                                {% for list_num, safety_item in checklist %}
+                                                <li>
+                                                    <input type="checkbox" class="custom-control-input" id={{ list_num }} value={{ list_num }} name="cl">
+                                                    <label class="custom-control-label" for={{ list_num }}>{{ safety_item }}</label>
+                                                </li>
+                                                {% endfor %}
+                                            </ul>
                                         </div>
 
                                         <div class="card-block">
@@ -121,11 +125,7 @@
     </div>
 </div>
 <!-- [ Main Content ] end -->
-
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}
-
-
-{% endblock javascripts %}
+{% block javascripts %}{% endblock javascripts %}

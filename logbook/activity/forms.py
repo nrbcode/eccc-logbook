@@ -15,8 +15,8 @@ class LogbookForm(FlaskForm):
     """ """    
     job_site = StringField("Site", validators=[InputRequired()])
     job_date = DateField("Date of Job", validators=[DataRequired()])
-    
-    #job_activity = StringField("Activity", validators=[InputRequired()])
+    job = TextAreaField("Work Activity", validators=[InputRequired()])
+
     #checklist = FieldList(StringField("Controls"))
     #created_at = DateField("Date", format='%d-%m-%Y', validators=[DataRequired()])
     

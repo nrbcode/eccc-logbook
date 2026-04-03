@@ -79,10 +79,11 @@ def my_logbook():
     logbook = LogEntry.find_by_concretor(_id=current_user.id)
 
     # Detect the current page
-    #segment = get_segment(request)    
+    segment = get_segment(request)    
 
     return render_template('logbook/index.html',
                            entries=logbook,
+                           segment=segment,
                            #pages=entries.pages,
                            #page=page_num,
                            #per_page=2
@@ -103,7 +104,7 @@ def new_logbook_entry():
         newentry = {
             "site": logbook_entry.job_site.data,
             "date": logbook_entry.job_date.data,
-            "activity": request.form.get("job_activity"),
+            "activity": logbook_entry.job.data,
             "duration": request.form.get("job_duration"),
             "controls": json.dumps(controls),
             "concretor_id": current_user.id
