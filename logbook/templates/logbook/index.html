@@ -30,7 +30,8 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-3">
-                                    <a type="button" href={{ url_for('activity_blueprint.new_logbook_entry') }} class="btn btn-primary" title="add new entry to your logbook" data-toggle="tooltip">New Entry</a>
+                                    <!-- role="button" -->
+                                    <a class="btn btn-primary" type="button" href={{ url_for('activity_blueprint.new_logbook_entry') }} title="add new entry to your logbook" data-toggle="tooltip" aria-controls="addLog" >Add Entry to Logbook</a>
                                 </div>
                                 {% endif %}
                             </div>
@@ -46,7 +47,7 @@
                                 <div class="col-xl-12">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5>LOGBOOOK</h5>
+                                            <h5>LOGBOOK</h5>
                                             <span class="d-block m-t-5">A record of work activities with risk of RCS exposure.</span>
                                         </div>
                                         <div class="card-block table-border-style">

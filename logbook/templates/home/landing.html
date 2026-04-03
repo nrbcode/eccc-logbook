@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en" class="h-100">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.84.0">
+    <title>ECCC Portal | softpowerware</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/cover/">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ config.ASSETS_ROOT }}/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+    </style>
+
+    <!-- Custom styles for this template -->
+    <link href="{{ config.ASSETS_ROOT }}/css/cover.css" rel="stylesheet">
+
+</head>
+<body class="d-flex h-100 text-center text-white bg-dark">
+
+    <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+        <header class="mb-auto">
+            <div>
+                <h3 class="float-md-start mb-0">Start</h3>
+                <nav class="nav nav-masthead justify-content-center float-md-end">
+                    <a class="nav-link active" aria-current="page" href="register">Register</a>
+                    <a class="nav-link" href="https://eccc-swms.netlify.app/" >SWMES</a>
+                </nav>
+            </div>
+        </header>
+
+        <main class="px-3">
+
+            <h1>ECCC Data Portal</h1>
+            <p class="lead">
+                Point of entry for the ECCC digital cloud.<br>
+                Tool registration and tagging, training, certification and RCS logbook.
+            </p>
+            <p class="lead">
+                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#loginCard" aria-expanded="false" aria-controls="loginCard">Enter</button>
+            </p>
+            <div class="collapse" id="loginCard">
+                <div class="card mb-auto">
+                    <div class="card-body text-center">
+
+                        <span class="mb-0 text-muted">
+                            {% if msg %}
+                            <span class="text-danger">{{ msg | safe }}</span>
+                            {% else %}
+                            Add your credentials
+                            {% endif %}
+                        </span>
+
+                        <br />
+                        <br />
+                        
+                        <form role="form" method="post" action="login">
+
+                            {{ form.hidden_tag() }}
+
+                            <div class="input-group mb-3">
+                                {{ form.username(placeholder="Username or eMail", class="form-control") }}
+                            </div>
+
+                            <div class="input-group mb-4">
+                                {{ form.password(placeholder="Password", class="form-control", type="password") }}
+                            </div>
+
+                            <button type="submit" name="login" class="btn btn-primary shadow-2 mb-4">Login</button>
+
+                        </form>
+
+                        <p class="mb-0 text-muted">Don’t have an account? <a href="{{ url_for('authentication_blueprint.register') }}">Sign UP</a></p>
+
+                    </div>
+                </div>
+            </div>
+
+        </main>
+
+        <footer class="mt-auto text-white-50">
+            <p>Developed by <a href="#" class="text-white">softpowerware</a>, using <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>.</p>
+        </footer>
+    </div>
+    {% include 'includes/scripts.html' %}
+</body>
+</html>

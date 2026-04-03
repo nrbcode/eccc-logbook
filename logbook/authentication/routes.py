@@ -70,10 +70,8 @@ def login():
                                msg='Wrong user or password',
                                form=login_form)
 
-    print(current_user.is_authenticated)
-    print('user NOT validated!')
-    return render_template('accounts/login.html',
-                           form=login_form)
+    #return render_template('accounts/login.html', form=login_form)
+    return render_template('home/landing.html', form=login_form)
 
 @blueprint.route('/register', methods=['GET', 'POST'])
 def register():
@@ -113,7 +111,8 @@ def register():
 
         return render_template('accounts/register.html',
                                msg='User created successfully.',
-                               form=create_account_form
+                               form=create_account_form,
+                               success=True
                                )
     else:
         print('form not validated!')
