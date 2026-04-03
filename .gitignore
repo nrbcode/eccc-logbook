@@ -108,9 +108,3 @@ venv.bak/
 
 # vs
 *.pyproj
-<<<<<<< HEAD
-
-runserver.py
-=======
-
->>>>>>> dev
