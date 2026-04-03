@@ -1,5 +1,5 @@
 # -*- encoding: utf-8 -*-
-""" logbook/activity/routes """
+""" logbook/activity/ """
 
 import json
 from datetime import datetime

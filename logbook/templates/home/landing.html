@@ -39,10 +39,10 @@
     <div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
         <header class="mb-auto">
             <div>
-                <h3 class="float-md-start mb-0">Start</h3>
+                <!-- <h3 class="float-md-start mb-0">Start</h3> -->
                 <nav class="nav nav-masthead justify-content-center float-md-end">
                     <a class="nav-link active" aria-current="page" href="register">Register</a>
-                    <a class="nav-link" href="https://eccc-swms.netlify.app/" >SWMES</a>
+                    <a class="nav-link" href="https://eccc-swms.netlify.app/">SWMES</a>
                 </nav>
             </div>
         </header>
@@ -77,7 +77,7 @@
                             {{ form.hidden_tag() }}
 
                             <div class="input-group mb-3">
-                                {{ form.username(placeholder="Username or eMail", class="form-control") }}
+                                {{ form.username(placeholder="Username", class="form-control") }}
                             </div>
 
                             <div class="input-group mb-4">
@@ -97,7 +97,8 @@
         </main>
 
         <footer class="mt-auto text-white-50">
-            <p>Developed by <a href="#" class="text-white">softpowerware</a>, using <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a>.</p>
+            <p>Developed by <a href="#" class="text-white">softpowerware</a>.</p>
+            <!-- , using <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a> -->
         </footer>
     </div>
     {% include 'includes/scripts.html' %}
