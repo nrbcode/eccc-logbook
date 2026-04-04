@@ -24,14 +24,8 @@
                                 </div>
                                 <div class="col-sm-3 text-primary">Admin Logbook</div>
                                 {% else %}
-                                <div class="col-sm-9">
-                                    <div class="page-header-title">
-                                        <h5 class="m-b-10">My Logbook</h5>
-                                    </div>
-                                </div>
-                                <div class="col-sm-3">
-                                    <!-- role="button" -->
-                                    <a class="btn btn-primary" type="button" href={{ url_for('activity_blueprint.new_logbook_entry') }} title="add new entry to your logbook" data-toggle="tooltip" aria-controls="addLog" >Add Entry to Logbook</a>
+                                <div class="page-header-title col-sm-9">
+                                    <h5 class="m-b-10">My Logbook</h5>
                                 </div>
                                 {% endif %}
                             </div>
@@ -49,6 +43,12 @@
                                         <div class="card-header">
                                             <h5>LOGBOOK</h5>
                                             <span class="d-block m-t-5">A record of work activities with risk of RCS exposure.</span>
+                                            {% if not admin %}
+                                            <div class="text-right">
+                                                <a class="btn btn-primary text-right" type="button" href={{ url_for('activity_blueprint.new_logbook_entry') }}
+                                                   title="add new entry to your logbook" data-toggle="tooltip" aria-controls="addLog">Add Entry to Logbook</a>
+                                            </div>
+                                            {% endif %}
                                         </div>
                                         <div class="card-block table-border-style">
                                             <div class="table-responsive">
