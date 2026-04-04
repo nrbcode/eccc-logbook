@@ -2,6 +2,8 @@
 """ logbook/authentication/models
     Data models provided to sqlalchemy."""
 
+import hashlib
+
 from flask_login import UserMixin
 from logbook import db
 
@@ -41,6 +43,19 @@ class User(db.Model, UserMixin):
             "address": self.address,
             "bio": self.bio
         }
+
+    def avatar(self, size: str = '300'):
+        
+        # Encode the email to lowercase and  then to bytes
+        email_encoded = self.email.lower().encode('utf-8')
+
+        # Generate the SHA256 hash of the email
+        digest = hashlib.sha256(email_encoded).hexdigest()
+        
+        # construct url
+        identicon_url = 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, size)
+
+        return identicon_url
 
     @classmethod
     def find_by_email(cls, email: str) -> "User":

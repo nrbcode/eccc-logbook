@@ -109,3 +109,4 @@ venv.bak/
 # vs
 *.pyproj
 runserver.py
+instructions.txt
