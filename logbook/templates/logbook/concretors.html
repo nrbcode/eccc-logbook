@@ -16,18 +16,10 @@
                     <div class="page-header">
                         <div class="page-block">
                             <div class="row align-items-center">
-                                {% if admin %}
-                                <div class="col-sm-6">
-                                    <div class="page-header-title">
-                                        <h5 class="m-b-10">{{ current_user.username }}</h5>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 text-primary">Administrator's query - All Logbook</div>
-                                {% else %}
-                                <div class="page-header-title col-sm-9">
+                                <div class="page-header-title col-sm-6">
                                     <h5 class="m-b-10">{{ current_user.username }}</h5>
                                 </div>
-                                {% endif %}
+                                <div class="col-sm-6 text-primary">Administrator's query - All Concretors</div>
                             </div>
                         </div>
                     </div>
@@ -43,37 +35,23 @@
                                         <div class="card-header">
                                             <h5>LOGBOOK</h5>
                                             <span class="d-block m-t-5">A record of work activities with risk of RCS exposure.</span>
-                                            {% if not admin %}
-                                            <div class="text-right">
-                                                <a class="btn btn-primary text-right" type="button" href={{ url_for('activity_blueprint.new_logbook_entry') }}
-                                                   title="add new entry to your logbook" data-toggle="tooltip" aria-controls="addLog">Add Entry to Logbook</a>
-                                            </div>
-                                            {% endif %}
                                         </div>
                                         <div class="card-block table-border-style">
                                             <div class="table-responsive">
                                                 <table class="table">
                                                     <thead>
                                                         <tr>
-                                                            {% if admin %}
-                                                            <th>Concretor ID</th>
-                                                            {% endif %}
-                                                            <th>Job Site</th>
-                                                            <th>Job Date</th>
-                                                            <th>Activity</th>
-                                                            <th>Duration</th>
+                                                            <th>ID</th>
+                                                            <th>Username</th>
+                                                            <th>Email</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
-                                                        {% for entry in entries %}
+                                                        {% for concretor in concretors %}
                                                         <tr>
-                                                            {% if admin %}
-                                                            <th scope="row">{{ entry.concretor_id }}</th>
-                                                            {% endif %}
-                                                            <td>{{ entry.site }}</td>
-                                                            <td>{{ entry.display_date() }}</td>
-                                                            <td>{{ entry.activity }}</td>
-                                                            <td>{{ entry.duration }}</td>
+                                                            <th scope="row">{{ concretor.id }}</th>
+                                                            <td>{{ concretor.username }}</td>
+                                                            <td>{{ concretor.email }}</td>
                                                         </tr>
                                                         {% endfor %}
                                                     </tbody>

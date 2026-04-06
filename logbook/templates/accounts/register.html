@@ -1,6 +1,6 @@
 {% extends "layouts/base-fullscreen.html" %}
 
-{% block title %} Login {% endblock %}
+{% block title %} Register {% endblock %}
 
 {% block content %}   
 
@@ -33,7 +33,7 @@
                         <a href="{{ url_for('authentication_blueprint.login') }}" class="btn btn-primary shadow-2 mb-4">Sign IN</a>
                     {% else %}
 
-                        <form role="form" method="post" action="">
+                        <form role="form" method="post" action="register">
 
                             {{ form.hidden_tag() }}                    
 
