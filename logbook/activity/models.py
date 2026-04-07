@@ -81,7 +81,8 @@ class LogEntry(db.Model, UserMixin):
     
     @classmethod
     def find_by_concretor(cls, _id: int):
-        return cls.query.filter_by(concretor_id=_id).order_by(cls.date.desc()).all()
+        #return cls.query.filter_by(concretor_id=_id).order_by(cls.date.desc()).all()
+        return cls.query.filter_by(concretor_id=_id).order_by(cls.date.desc())
 
     def delete_from_db(self) -> None:
         try:

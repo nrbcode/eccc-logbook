@@ -1,0 +1,33 @@
+<!-- Select dropdown macro -->
+{% macro form_select(name, label, options, selected='', required=false) %}
+<div class="form-group">
+    <label for="{{ name }}">{{ label }}</label>
+    <select id="{{ name }}" name="{{ name }}" {% if required %}required{% endif %} class="form-control">
+        <option value="">Select {{ label }}</option>
+        {% for value, text in options %}
+        <option value="{{ value }}" {% if value==selected %}selected{% endif %}>
+            {{ text }}
+        </option>
+        {% endfor %}
+    </select>
+</div>
+{% endmacro %}
+
+{% macro render_pagination(pagination, endpoint) %}
+<div class="page-items">
+    {{ pagination.first }} - {{ pagination.last }} of {{ pagination.total }}
+</div>
+<div class=pagination>
+    {% for page in pagination.iter_pages() %}
+        {% if page %}
+            {% if page != pagination.page %}
+            <a href="{{ url_for(endpoint, page=page) }}">{{ page }}</a>
+            {% else %}
+            <strong>{{ page }}</strong>
+            {% endif %}
+        {% else %}
+        <span class=ellipsis>...</span>
+        {% endif %}
+    {% endfor %}
+</div>
+{% endmacro %}

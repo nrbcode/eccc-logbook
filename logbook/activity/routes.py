@@ -48,21 +48,20 @@ def all_users():
 def view_logbook():
 
     """    Table of pre-start records.    """
-    #page_num = int(request.args.get("page") or 1)
-    #entries = CheckList.objects(author=current_user).order_by('-job_date').paginate(page=page_num, per_page=2)
-    logbook = LogEntry.query.all()
+    page_num = request.args.get('page', 1, type=int)
+    #entries = LogEntry.query.all()
+    entries = LogEntry.query.paginate(page=page_num, per_page=2, error_out=False)
 
     # Detect the current page
     segment = get_segment(request)
-
+    
     return render_template(
         'logbook/index.html',
-        segment = segment,
-        entries = logbook,
-        admin = True,
-        #pages=entries.pages,
-        #page=page_num,
-        #per_page=2
+        segment=segment,
+        entries=entries,
+        admin=True,
+        page=page_num,
+        per_page=3
     )
 
 @blueprint.route('/all-concretors', methods=['GET'])
@@ -87,18 +86,16 @@ def all_concretors():
 def my_logbook():
 
     """    Table of logbook entries.    """
-    #page_num = int(request.args.get("page") or 1)
-    #entries = CheckList.objects(author=current_user).order_by('-job_date').paginate(page=page_num, per_page=2)
-    
-    logbook = LogEntry.find_by_concretor(_id=current_user.id)
+    page_num = request.args.get('page', 1, type=int)
+    entries = LogEntry.find_by_concretor(_id=current_user.id).paginate(
+        page=page_num, per_page=2, error_out=False)
     segment = get_segment(request)
 
-    return render_template('logbook/index.html',
-                           entries=logbook,
+    return render_template( 'logbook/index.html',
+                           entries=entries,
                            segment=segment,
-                           #pages=entries.pages,
-                           #page=page_num,
-                           #per_page=2
+                           page=page_num,
+                           per_page=3
                            )
 
 @blueprint.route('/my-logbook/new', methods=["GET", "POST"])
@@ -109,6 +106,8 @@ def new_logbook_entry():
     logbook_entry = LogbookForm(request.form)
     
     if logbook_entry.validate_on_submit():
+
+        # convert list integers to strings
         cl = request.form.getlist("cl")
         controls = [CONTROLS[int(num)] for num in cl]
         
@@ -161,7 +160,7 @@ def edit_profile():
         }
         user.update_user(user_details)
 
-        return redirect(url_for('activity_blueprint.my_profile'))
+        return redirect(url_for('.my_profile'))
 
     return render_template( 'logbook/edit-profile.html',
                           form=edit_profile, 

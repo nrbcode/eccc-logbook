@@ -1,99 +1,136 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Logbook {% endblock %} 
+{% from '/includes/form-macros.html' import render_pagination %}
+
+{% block title %} Logbook {% endblock %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
 
-    <!-- [ Main Content ] start -->
-    <div class="pcoded-main-container">
-        <div class="pcoded-wrapper">
-            <div class="pcoded-content">
-                <div class="pcoded-inner-content">
-                    <!-- [ breadcrumb ] start -->
-                    <div class="page-header">
-                        <div class="page-block">
-                            <div class="row align-items-center">
-                                {% if admin %}
-                                <div class="col-sm-6">
-                                    <div class="page-header-title">
-                                        <h5 class="m-b-10">{{ current_user.username }}</h5>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 text-primary">Administrator's query - All Logbook</div>
-                                {% else %}
-                                <div class="page-header-title col-sm-9">
+<!-- [ Main Content ] start -->
+<div class="pcoded-main-container">
+    <div class="pcoded-wrapper">
+        <div class="pcoded-content">
+            <div class="pcoded-inner-content">
+                <!-- [ breadcrumb ] start -->
+                <div class="page-header">
+                    <div class="page-block">
+                        <div class="row align-items-center">
+                            {% if admin %}
+                            <div class="col-sm-6">
+                                <div class="page-header-title">
                                     <h5 class="m-b-10">{{ current_user.username }}</h5>
                                 </div>
-                                {% endif %}
                             </div>
+                            <div class="col-sm-6 text-primary">Administrator's query - All Logbook</div>
+                            {% else %}
+                            <div class="page-header-title col-sm-9">
+                                <h5 class="m-b-10">{{ current_user.username }}</h5>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
-                    <!-- [ breadcrumb ] end -->
-                    <div class="main-body">
-                        <div class="page-wrapper">
-                            <!-- [ Main Content ] start -->
-                            <div class="row">
+                </div>
+                <!-- [ breadcrumb ] end -->
+                <div class="main-body">
+                    <div class="page-wrapper">
+                        <!-- [ Main Content ] start -->
+                        <div class="row">
 
-                                <!-- [ basic-table ] start -->
-                                <div class="col-xl-12">
-                                    <div class="card">
-                                        <div class="card-header">
-                                            <h5>LOGBOOK</h5>
-                                            <span class="d-block m-t-5">A record of work activities with risk of RCS exposure.</span>
-                                            {% if not admin %}
-                                            <div class="text-right">
-                                                <a class="btn btn-primary text-right" type="button" href={{ url_for('activity_blueprint.new_logbook_entry') }}
-                                                   title="add new entry to your logbook" data-toggle="tooltip" aria-controls="addLog">Add Entry to Logbook</a>
-                                            </div>
-                                            {% endif %}
+                            <!-- [ basic-table ] start -->
+                            <div class="col-xl-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>LOGBOOK</h5>
+                                        <span class="d-block m-t-5">A record of work activities with risk of RCS exposure.</span>
+                                        {% if not admin %}
+                                        <div class="text-right">
+                                            <a class="btn btn-primary text-right" type="button" href={{ url_for('activity_blueprint.new_logbook_entry') }}
+                                               title="add new entry to your logbook" data-toggle="tooltip" aria-controls="addLog">Add Entry to Logbook</a>
                                         </div>
-                                        <div class="card-block table-border-style">
-                                            <div class="table-responsive">
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            {% if admin %}
-                                                            <th>Concretor ID</th>
-                                                            {% endif %}
-                                                            <th>Job Site</th>
-                                                            <th>Job Date</th>
-                                                            <th>Activity</th>
-                                                            <th>Duration</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        {% for entry in entries %}
-                                                        <tr>
-                                                            {% if admin %}
-                                                            <th scope="row">{{ entry.concretor_id }}</th>
-                                                            {% endif %}
-                                                            <td>{{ entry.site }}</td>
-                                                            <td>{{ entry.display_date() }}</td>
-                                                            <td>{{ entry.activity }}</td>
-                                                            <td>{{ entry.duration }}</td>
-                                                        </tr>
-                                                        {% endfor %}
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                        {% endif %}
+                                    </div>
+                                    <div class="card-block table-border-style">
+                                        <div class="table-responsive">
+                                            <table class="table">
+                                                <thead>
+                                                    <tr>
+                                                        {% if admin %}
+                                                        <th>Concretor ID</th>
+                                                        {% endif %}
+                                                        <th>Job Site</th>
+                                                        <th>Job Date</th>
+                                                        <th>Activity</th>
+                                                        <th>Duration</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for entry in entries.items %}
+                                                    <tr>
+                                                        {% if admin %}
+                                                        <th scope="row">{{ entry.concretor_id }}</th>
+                                                        {% endif %}
+                                                        <td>{{ entry.site }}</td>
+                                                        <td>{{ entry.display_date() }}</td>
+                                                        <td>{{ entry.activity }}</td>
+                                                        <td>{{ entry.duration }}</td>
+                                                    </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
+                                    <div class="card-body">
+                                        <hr>
+                                        {% if admin %}
+                                        {{ render_pagination(pagination=entries, endpoint='.view_logbook') }}
+                                        {% else %}
+                                        <nav aria-label="Page navigation example">
+                                            <ul class="pagination mb-0">
+                                                <li class="page-item">
+                                                    {% if page == entries.first %}
+                                                    <span class="page-link disabled">Previous</span>
+                                                    {% else %}
+                                                    <a class="page-link" href={{ url_for('.my_logbook', page=page - 1) }}>Previous</a>
+                                                    {% endif %}
+                                                </li>
+                                                {% for entry in entries.iter_pages() %}
+                                                {% if entry == entries.page %}
+                                                <li class="page-item active">
+                                                    <span class="page-link">{{ entry }}<span class="sr-only">(current)</span></span>
+                                                </li>
+                                                {% else %}
+                                                <li class="page-item">
+                                                    <a class="page-link" href={{ url_for('.my_logbook', page=entry) }}>{{ entry }}</a>
+                                                </li>
+                                                {% endif %}
+                                                {% endfor %}
+                                                <li class="page-item">
+                                                    {% if entries.last == entries.total %}
+                                                    <span class="page-link disabled">Next</span>
+                                                    {% else %}
+                                                    <a class="page-link" href={{ url_for('.my_logbook', page=page + 1) }}>Next</a>
+                                                    {% endif %}
+                                                </li>
+                                            </ul>
+                                        </nav>
+                                        {% endif %}
+                                    </div>
                                 </div>
-                                <!-- [ basic-table ] end -->
-                                
                             </div>
-                            <!-- [ Main Content ] end -->
+                            <!-- [ basic-table ] end -->
+
                         </div>
+                        <!-- [ Main Content ] end -->
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <!-- [ Main Content ] end -->
-
+</div>
+<!-- [ Main Content ] end -->
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->

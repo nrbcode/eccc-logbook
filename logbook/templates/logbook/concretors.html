@@ -44,6 +44,7 @@
                                                             <th>ID</th>
                                                             <th>Username</th>
                                                             <th>Email</th>
+                                                            <th>Date created</th>
                                                         </tr>
                                                     </thead>
                                                     <tbody>
@@ -52,6 +53,7 @@
                                                             <th scope="row">{{ concretor.id }}</th>
                                                             <td>{{ concretor.username }}</td>
                                                             <td>{{ concretor.email }}</td>
+                                                            <td>{{ concretor.created_at }}</td>
                                                         </tr>
                                                         {% endfor %}
                                                     </tbody>

@@ -4,7 +4,10 @@
 
 import hashlib
 
+from sqlalchemy import func
+from sqlalchemy.orm.attributes import set_attribute
 from flask_login import UserMixin
+
 from logbook import db
 
 
@@ -21,6 +24,7 @@ class User(db.Model, UserMixin):
     lastname      = db.Column(db.String(64), nullable=True)
     address       = db.Column(db.String(64), nullable=True)
     bio           = db.Column(db.String(64), nullable=True)
+    created_at    = db.Column(db.DateTime)
     
     def __init__(self, **kwargs):
         for property, value in kwargs.items():
@@ -30,6 +34,7 @@ class User(db.Model, UserMixin):
                 # the ,= unpack of a singleton fails PEP8 (travis flake8 test)
                 value = value[0]
             setattr(self, property, value)
+        set_attribute(self, "created_at", func.now())
     
     def __repr__(self):
         return self.username
@@ -68,7 +73,7 @@ class User(db.Model, UserMixin):
     
     @classmethod
     def find_by_id(cls, _id: int) -> "User":
-        #return cls.query.filter_by(id=_id).first()
+
         return cls.query.filter(id=_id).first()
 
     @classmethod

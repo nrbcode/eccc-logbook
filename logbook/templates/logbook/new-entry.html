@@ -1,7 +1,7 @@
 {% extends "layouts/base.html" %}
 
 <!-- Import macros from the forms file -->
-{% from '/logbook/form-macros.html' import form_select %}
+{% from '/includes/form-macros.html' import form_select %}
 
 {% block title %} New Entry {% endblock %}
 
@@ -43,7 +43,9 @@
                                         <h5>New Logbook  Entry</h5>
                                         <span class="d-block m-t-5">write a new <code>logbook entry</code> here</span>
                                     </div>
-                                    <form role="form" method="post" action="/logbook/my-logbook/new" >
+
+                                    <!--<form role="form" method="post" action="/logbook/my-logbook/new" >-->
+                                    <form role="form" method="post">
 
                                         <div class="card-block">
 
@@ -52,7 +54,7 @@
                                             <!--datetime now: {*{ #datetimenow.strftime('%d/%m/%Y %H:%M:%S') }*}-->
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    
+
                                                     <!-- jinja date control -->
                                                     <div class="form-group">
                                                         {{ form.job_date.label }} (can be back-dated)
@@ -89,6 +91,7 @@
                                                             <option value="5" label="5">5</option>
                                                             <option value="6" label="6">6</option>
                                                             <option value="7" label="7">7</option>
+                                                            <option value="8" label="8">8</option>
                                                         </datalist>
                                                     </div>
                                                 </div>
@@ -110,7 +113,9 @@
                                         <div class="card-block">
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                                                    <!--<button type="submit" class="btn btn-primary shadow-2 mb-4">Update</button>-->
+                                                    {{ form.submit_entry(class="btn btn-primary shadow-2 mb-4") }}
                                                 </div>
                                             </div>
                                         </div>
