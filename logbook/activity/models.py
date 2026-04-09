@@ -24,7 +24,7 @@ class LogEntry(db.Model, UserMixin):
     site = db.Column(db.String(64))
     date = db.Column(db.Date)
     activity = db.Column(db.String(64))
-    duration = db.Column(db.Integer, nullable=False)
+    duration = db.Column(db.Float, nullable=False)
     controls = db.Column(db.Text)
     created_at = db.Column(db.DateTime)
     #created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
