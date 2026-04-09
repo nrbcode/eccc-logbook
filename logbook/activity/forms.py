@@ -5,21 +5,20 @@ Copyright (c) 2019 - present AppSeed.us
 
 #from wsgiref.validate import validator
 from flask_wtf import FlaskForm
-#from wtforms.fields.simple import SubmitField
 from wtforms import StringField, DateField, TextAreaField, SubmitField
 from wtforms.validators import InputRequired, DataRequired
-#from wtforms.fields import SelectField
+from wtforms.fields import RadioField
 
 
 class LogbookForm(FlaskForm):
     """ """    
-    job_site = StringField("Site", validators=[InputRequired()])
+    job_site = StringField("Job Site", validators=[InputRequired()])# jinja macro
     job_date = DateField("Date of Job", validators=[DataRequired()])
-    job = TextAreaField("Work Activity", validators=[InputRequired()])
+    job_task = RadioField("Work Activity",
+                         choices=[('floor grinder', 'Walk-behind Grinder'), ('hand grinder', 'Hand Grinder'), ('jackhammer', 'Jackhammer'), ('drill', 'Drill into Concrete')],
+                         validators=[InputRequired()])
     submit_entry = SubmitField('Submit')
-
     #checklist = FieldList(StringField("Controls"))
-    #created_at = DateField("Date", format='%d-%m-%Y', validators=[DataRequired()])
     
 
 class EditProfileForm(FlaskForm):

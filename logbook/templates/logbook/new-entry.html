@@ -61,39 +61,42 @@
                                                         {{ form.job_date(class="form-control", value=datetimenow.strftime('%Y-%m-%d')) }}
                                                     </div>
 
-                                                    <!-- jinja form select -->
-                                                    {{
-                                                    form_select('job', 'Work Activity', [
-                                                        ('floor-grinder', 'Walk-behind Grinder'),
-                                                        ('hand-grinder', 'Hand Grinder'),
-                                                        ('drill', 'Drill into Concrete'),
-                                                        ('jackhammer', 'Jackhammer')
-                                                        ], required=true)
-                                                    }}
+                                                    <!-- wtform radio -->
+                                                    <label>{{ form.job_task.label }}</label>
+                                                    {% for task in form.job_task %}
+                                                    <div class="custom-control custom-radio">
+                                                        {{ task(class="custom-control-input") }}
+                                                        {{ task.label(class="custom-control-label") }}<br />
+                                                    </div>
+                                                    {% endfor %}
+                                                    
                                                 </div>
                                                 <div class="col-md-6">
 
-                                                    <!-- site -->
-                                                    <div class="form-group">
-                                                        <label>Site</label>
-                                                        {{ form.job_site(placeholder="Job site", class="form-control") }}
-                                                    </div>
+                                                    <!-- jinja form select -->
+                                                    {{
+                                                    form_select('job_site', 'Job Site', [
+                                                        ('jh-nth', 'New Toowoomba Hospital - John Holland'),
+                                                        ('mp-qw', 'Queens Wharf - Multiplex'),
+                                                        ('jh-lh', 'Logan Hospital - John Holland')
+                                                        ], required=true)
+                                                    }}
 
                                                     <!-- duration -->
+                                                    <label for="duration-bar2">
+                                                        Duration: <output class="price-output"></output> hours.
+                                                    </label>
                                                     <div class="form-control">
-                                                        <label for="duration-bar">Duration</label>
-                                                        <input name="job_duration" type="range" list="tickmarks" min="1" max="8" step="0.5" class="custom-range" id="duration-bar" />
-                                                        <datalist id="tickmarks">
-                                                            <option value="1" label="1">1</option>
-                                                            <option value="2" label="2">2</option>
-                                                            <option value="3" label="3">3</option>
-                                                            <option value="4" label="4">4</option>
-                                                            <option value="5" label="5">5</option>
-                                                            <option value="6" label="6">6</option>
-                                                            <option value="7" label="7">7</option>
-                                                            <option value="8" label="8">8</option>
-                                                        </datalist>
+                                                        <input type="range"
+                                                               class="custom-range"
+                                                               name="job_duration"
+                                                               id="duration-bar2"
+                                                               min="0"
+                                                               max="10"
+                                                               step="0.25"
+                                                               value="1" />
                                                     </div>
+
                                                 </div>
                                             </div>
                                         </div>
@@ -137,4 +140,26 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+
+<script>
+    const price = document.querySelector("#duration-bar2");
+    const output = document.querySelector(".price-output");
+
+    output.textContent = price.value;
+
+    price.addEventListener("input", () => {
+        output.textContent = price.value;
+    });
+
+    //var slider = document.getElementById("duration-bar2");
+    //var output = document.querySelector(".duration-output");
+    //output.innerHTML = slider.value; // Display the default slider value
+
+    // Update the current slider value (each time you drag the slider handle)
+    slider.oninput = function () {
+        output.innerHTML = this.value;
+    } 
+</script>
+
+{% endblock javascripts %}

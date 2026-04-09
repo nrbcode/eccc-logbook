@@ -71,8 +71,10 @@
                                                     <tr>
                                                         {% if admin %}
                                                         <th scope="row">{{ entry.concretor_id }}</th>
-                                                        {% endif %}
                                                         <td>{{ entry.site }}</td>
+                                                        {% else %}
+                                                        <th scope="row">{{ entry.site }}</th>
+                                                        {% endif %}
                                                         <td>{{ entry.display_date() }}</td>
                                                         <td>{{ entry.activity }}</td>
                                                         <td>{{ entry.duration }}</td>

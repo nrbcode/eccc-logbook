@@ -50,7 +50,7 @@ def view_logbook():
     """    Table of pre-start records.    """
     page_num = request.args.get('page', 1, type=int)
     #entries = LogEntry.query.all()
-    entries = LogEntry.query.paginate(page=page_num, per_page=2, error_out=False)
+    entries = LogEntry.query.paginate(page=page_num, per_page=10, error_out=False)
 
     # Detect the current page
     segment = get_segment(request)
@@ -61,7 +61,7 @@ def view_logbook():
         entries=entries,
         admin=True,
         page=page_num,
-        per_page=3
+        per_page=10
     )
 
 @blueprint.route('/all-concretors', methods=['GET'])
@@ -88,14 +88,14 @@ def my_logbook():
     """    Table of logbook entries.    """
     page_num = request.args.get('page', 1, type=int)
     entries = LogEntry.find_by_concretor(_id=current_user.id).paginate(
-        page=page_num, per_page=2, error_out=False)
+        page=page_num, per_page=5, error_out=False)
     segment = get_segment(request)
 
     return render_template( 'logbook/index.html',
                            entries=entries,
                            segment=segment,
                            page=page_num,
-                           per_page=3
+                           per_page=5
                            )
 
 @blueprint.route('/my-logbook/new', methods=["GET", "POST"])
@@ -115,7 +115,7 @@ def new_logbook_entry():
         newentry = {
             "site": logbook_entry.job_site.data,
             "date": logbook_entry.job_date.data,
-            "activity": logbook_entry.job.data,
+            "activity": logbook_entry.job_task.data,
             "duration": request.form.get("job_duration"),
             "controls": json.dumps(controls),
             "concretor_id": current_user.id
@@ -124,13 +124,8 @@ def new_logbook_entry():
         logentry = LogEntry(**newentry)
         logentry.save()
 
-        #return jsonify(**newentry), 201
-        #return jsonify(logentry.to_json()), 201
         return redirect(url_for('.my_logbook'))
     
-    #dt_now = datetime.now().strftime('%d/%m/%Y')
-    #dt_now = datetime.now().strftime('%Y-%m-%d')
-
     return render_template( 'logbook/new-entry.html',
                            checklist = enumerate(CONTROL_MEASURES, start=1),
                            segment = 'logbook',
