@@ -116,7 +116,7 @@ def new_logbook_entry():
             "site": logbook_entry.job_site.data,
             "date": logbook_entry.job_date.data,
             "activity": logbook_entry.job_task.data,
-            "duration": request.form.get("job_duration"),
+            "duration": float(request.form.get("job_duration")),
             "controls": json.dumps(controls),
             "concretor_id": current_user.id
             }
