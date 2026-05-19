@@ -34,13 +34,8 @@ class Config(object):
         SQLALCHEMY_DATABASE_URI = DATABASE_URL
     
     # SMTP credentials
-    MAIL_SERVER = 'smtp.gmail.com'
-    MAIL_PORT = 587
-    MAIL_USERNAME = 'nathan.eccc@gmail.com'
-    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
-    MAIL_USE_TLS = True
-    MAIL_USE_SSL = False
-    MAIL_DEFAULT_SENDER = 'nathan.eccc@gmail.com'
+    MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER')
+    RESEND_API_KEY      = os.getenv('RESEND_API_KEY')
 
 class ProductionConfig(Config):
     DEBUG = False

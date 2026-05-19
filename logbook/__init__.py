@@ -10,7 +10,6 @@ from flask import Flask
 from flask_bcrypt import Bcrypt
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-from flask_mail import Mail
 
 
 load_dotenv()
@@ -18,12 +17,10 @@ load_dotenv()
 db = SQLAlchemy()
 bc = Bcrypt()
 lm = LoginManager()
-fm = Mail()
 
 def register_extensions(app):
     db.init_app(app)
     lm.init_app(app)
-    fm.init_app(app)
 
 
 def register_blueprints(app):

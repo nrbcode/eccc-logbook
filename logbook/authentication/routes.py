@@ -3,13 +3,12 @@
 Authentication
 """
 import json
-import logging
+import resend
 
-from flask import render_template, redirect, request, url_for, jsonify
+from flask import current_app, render_template, redirect, request, url_for, jsonify
 from flask_login import current_user, login_user, logout_user, login_required
-from flask_mail import Message
 
-from logbook import bc, lm, fm
+from logbook import bc, lm
 from . import blueprint
 from .forms import LoginForm, CreateAccountForm, ResetPasswordLink, ResetPasswordForm
 from .models import User
@@ -96,7 +95,7 @@ def register():
         # Generate message for email verification
         token = user.generate_confirmation_token()
         verify_url = url_for('.verify_email', token=token, _external=True)
-        send_verification_email(user.username, "Verify Email", user.email, verify_url)
+        send_email("Verify Email", user.email, verify_url)
         
         # Delete user from session
         logout_user()
@@ -138,7 +137,7 @@ def reset_password_link():
             # Generate message for email verification
             token = user.generate_confirmation_token()
             verify_url = url_for('.reset_password', token=token, _external=True)
-            send_verification_email(user.username, "Reset Password", user.email, verify_url)
+            send_email("Reset Password", user.email, verify_url)
             
             msg = "Please check Email for Reset Password link"
             success = True
@@ -171,7 +170,6 @@ def reset_password(token):
         ph = bc.generate_password_hash(p).decode('utf-8')
         user.update_user({'pw_hash': ph})
         logout_user()
-        logging.info("Password reset by verified email!")
 
         return redirect(url_for('.login'))
 
@@ -190,7 +188,6 @@ def verify_email(token):
     else:
         user.update_user({'verified': True})
         logout_user()
-        logging.info("Account has been verified!")
 
         return redirect(url_for('.login'))
 
@@ -198,8 +195,9 @@ def verify_email(token):
 # Callbacks
 @lm.user_loader
 def load_user(user_id):
-
-    return User.query.filter_by(id=user_id).first()
+    return User.query.get(int(user_id))  #if this changes to a string, remove int
+    #return User.query.filter_by(id=user_id).first()
+    #return User.find_by_id(user_id)
     
 # request (API) callback
 @lm.request_loader
@@ -217,20 +215,17 @@ def unauthorized_handler():
 
 @blueprint.errorhandler(403)
 def access_forbidden(error):
-    logging.error(f"403 Error: {str(error)}")
-
+    print(str(error))
     return render_template('home/page-403.html'), 403
 
 @blueprint.errorhandler(404)
 def not_found_error(error):
-    logging.error(f"404 Error: {str(error)}")
-
+    print(str(error))
     return render_template('home/page-404.html'), 404
 
 @blueprint.errorhandler(500)
 def internal_error(error):
-    logging.error(f"500 Error: {str(error)}")
-
+    print(str(error))
     return render_template('home/page-500.html'), 500
 
 #******************************************************************************
@@ -249,18 +244,23 @@ def all_users():
 #******************************************************************************
 # Helpers
 
-def send_verification_email(name, subject, to, verify_url):
-    """Send the verification email with a secure link."""
+def send_email(subject, to, verify_url):
+    resend.api_key = current_app.config.get('RESEND_API_KEY')
     try:
-        msg = Message(
-            subject=subject,
-            recipients=[to],
-            html = render_template('email/verify-email.html',
-                                   name=name,
+        result = resend.Emails.send({
+            "from": current_app.config.get('MAIL_DEFAULT_SENDER'),
+            "to": [to],
+            "subject": subject,
+            "html": render_template('email/verify-email.html',
                                    verify_url=verify_url,
                                    subject=subject)
-        )
-        fm.send(msg)
-        logging.info(f"Verification email sent to {to}.")
-    except Exception as e:
-        logging.error(f"Error sending email to {to}: {str(e)}")
+        })
+
+        return jsonify({
+            "success": True,
+            "result": result,
+        })
+
+    except Exception:
+
+        return jsonify({"error": "Failed to send email"}), 500
