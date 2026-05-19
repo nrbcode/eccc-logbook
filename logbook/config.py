@@ -12,20 +12,20 @@ class Config(object):
     # Assets Management
     ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets')
     
-    # Set up the App SECRET_KEY
+    # Set up the App secret key
     SECRET_KEY  = os.getenv('FLASK_SECRET_KEY', None)
     if not SECRET_KEY:
-        SECRET_KEY = ''.join(random.choice( string.ascii_lowercase  ) for i in range( 32 ))
+        SECRET_KEY = ''.join(random.choice( string.ascii_lowercase ) for i in range( 32 ))
     
+    # Configure the textual database
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-
-    DATABASE_URL= os.getenv("DATABASE_URL")
-    DB_ENGINE   = os.getenv('DB_ENGINE')
-    DB_USERNAME = os.getenv('DB_USERNAME')
-    DB_PASS     = os.getenv('DB_PASS')
-    DB_HOST     = os.getenv('DB_HOST')
-    DB_PORT     = os.getenv('DB_PORT')
-    DB_NAME     = os.getenv('DB_NAME')
+    DATABASE_URL    = os.getenv("DATABASE_URL")
+    DB_ENGINE       = os.getenv('DB_ENGINE')
+    DB_USERNAME     = os.getenv('DB_USERNAME')
+    DB_PASS         = os.getenv('DB_PASS')
+    DB_HOST         = os.getenv('DB_HOST')
+    DB_PORT         = os.getenv('DB_PORT')
+    DB_NAME         = os.getenv('DB_NAME')
 
     # try to set up a Relational DBMS
     if not DATABASE_URL:
@@ -33,6 +33,15 @@ class Config(object):
     else:
         SQLALCHEMY_DATABASE_URI = DATABASE_URL
     
+    # SMTP credentials
+    MAIL_SERVER = 'smtp.gmail.com'
+    MAIL_PORT = 587
+    MAIL_USERNAME = 'nathan.eccc@gmail.com'
+    MAIL_PASSWORD = os.getenv('MAIL_PASSWORD')
+    MAIL_USE_TLS = True
+    MAIL_USE_SSL = False
+    MAIL_DEFAULT_SENDER = 'nathan.eccc@gmail.com'
+
 class ProductionConfig(Config):
     DEBUG = False
 

@@ -7,6 +7,7 @@ Copyright (c) 2019 - present AppSeed.us
 import json
 from flask_login import UserMixin
 from sqlalchemy import func
+from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy.orm.attributes import set_attribute
 
 from logbook import db
@@ -28,7 +29,6 @@ class LogEntry(db.Model, UserMixin):
     controls = db.Column(db.Text)
     created_at = db.Column(db.DateTime)
     #created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
-    #db.relationship("Student", back_populates="classes")
 
     def __init__(self, **kwargs):
         for property, value in kwargs.items():

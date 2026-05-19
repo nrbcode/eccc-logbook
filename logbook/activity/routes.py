@@ -1,85 +1,26 @@
 # -*- encoding: utf-8 -*-
-""" logbook/activity/ """
-
+"""
+Logbook Activity
+"""
 import json
 from datetime import datetime
+
 from flask import render_template, redirect, request, url_for, jsonify
 from flask_login import current_user, login_required
-#from jinja2 import TemplateNotFound
 
 from . import blueprint
 from .constants import CONTROL_MEASURES
 from .forms import LogbookForm, EditProfileForm
 from .models import LogEntry
-
+from ..utilities import get_segment
 from logbook.authentication.models import User
 
 
 CONTROLS = dict(enumerate(CONTROL_MEASURES, start=1))
 
-#******************************************************************************
 
 #******************************************************************************
-
-@blueprint.route('/user_info', methods=['GET'])
-@login_required
-def user_info():
-
-    if current_user.is_authenticated:
-        resp = {"result": 200,
-                "data": current_user.to_json()}
-    else:
-        resp = {"result": 401,
-                "data": {"message": "user no login"}}
-    return jsonify(**resp)
-
-@blueprint.route('/all_users', methods=['GET'])
-@login_required
-def all_users():
-    result = User.find_all()
-    json_str = json.dumps([ob.username for ob in result])
-    resp = {"result": 200,
-            "data": json_str}
-
-    return jsonify(**resp)
-
-@blueprint.get('/all-logbook')
-@login_required
-def view_logbook():
-
-    """    Table of pre-start records.    """
-    page_num = request.args.get('page', 1, type=int)
-    #entries = LogEntry.query.all()
-    entries = LogEntry.query.paginate(page=page_num, per_page=10, error_out=False)
-
-    # Detect the current page
-    segment = get_segment(request)
-    
-    return render_template(
-        'logbook/index.html',
-        segment=segment,
-        entries=entries,
-        admin=True,
-        page=page_num,
-        per_page=10
-    )
-
-@blueprint.route('/all-concretors', methods=['GET'])
-@login_required
-def all_concretors():
-    """
-    result = User.find_all()
-    json_str = json.dumps([ob.username for ob in result])
-    resp = {"result": 200,
-            "data": json_str}
-
-    return jsonify(**resp)"""
-    users = User.query.all()
-    return render_template('logbook/concretors.html', concretors=users)
-
-#******************************************************************************
-
-#******************************************************************************
+# GUI views
 
 @blueprint.get('/my-logbook')
 @login_required
@@ -136,7 +77,9 @@ def new_logbook_entry():
 @login_required
 def my_profile():
     
-    return render_template( 'logbook/my-profile.html', segment='profile')
+    return render_template('logbook/my-profile.html',
+                           segment=get_segment(request)
+                           )
 
 @blueprint.route('/my-profile/edit', methods=['GET', 'POST'])
 @login_required
@@ -161,19 +104,48 @@ def edit_profile():
                           form=edit_profile, 
                           segment='profile')
 
+#******************************************************************************
+# Admin views
 
-# Helper - Extract current page name from request
-def get_segment(request):
+@blueprint.get('/all-logbook')
+@login_required
+def view_logbook():
 
-    try:
+    """    Table of pre-start records.    """
+    page_num = request.args.get('page', 1, type=int)
+    #entries = LogEntry.query.all()
+    entries = LogEntry.query.paginate(page=page_num, per_page=10, error_out=False)
 
-        segment = request.path.split('/')[-1]
+    # Detect the current page
+    segment = get_segment(request)
+    
+    return render_template(
+        'logbook/index.html',
+        segment=segment,
+        entries=entries,
+        admin=True,
+        page=page_num,
+        per_page=10
+    )
 
-        if segment == '':
-            segment = 'index'
+@blueprint.get('/all-concretors')
+@login_required
+def all_concretors():
+    users = User.query.all()
+    return render_template('logbook/concretors.html', concretors=users)
 
-        return segment
+#******************************************************************************
+# API
 
-    except:
-        return None
+@blueprint.get('/user_info')
+@login_required
+def user_info():
+
+    if current_user.is_authenticated:
+        resp = {"result": 200,
+                "data": current_user.to_json()}
+    else:
+        resp = {"result": 401,
+                "data": {"message": "user no login"}}
+    return jsonify(**resp)
  

@@ -1,12 +1,16 @@
 # -*- encoding: utf-8 -*-
-""" logbook/authentication/models
-    Data models provided to sqlalchemy."""
-
+"""
+User Data Model
+"""
 import hashlib
+import jwt
+from time import time
 
-from sqlalchemy import func
-from sqlalchemy.orm.attributes import set_attribute
+from flask import current_app
 from flask_login import UserMixin
+from sqlalchemy import func
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.orm.attributes import set_attribute
 
 from logbook import db
 
@@ -19,13 +23,13 @@ class User(db.Model, UserMixin):
     username      = db.Column(db.String(64), unique=True)
     email         = db.Column(db.String(64), unique=True)
     pw_hash       = db.Column(db.String(128))
-    #pw_hash       = db.Column(db.LargeBinary)
     firstname     = db.Column(db.String(64), nullable=True)
     lastname      = db.Column(db.String(64), nullable=True)
     address       = db.Column(db.String(64), nullable=True)
     bio           = db.Column(db.String(64), nullable=True)
     created_at    = db.Column(db.DateTime)
-    
+    verified      = db.Column(db.Boolean, default=False)  # Email verification status
+
     def __init__(self, **kwargs):
         for property, value in kwargs.items():
             # depending on whether value is an iterable or not, we must unpack it's value
@@ -51,12 +55,10 @@ class User(db.Model, UserMixin):
 
     def avatar(self, size: str = '300'):
         
-        # Encode the email to lowercase and  then to bytes
+        # Encode the email to lowercase and then to bytes
         email_encoded = self.email.lower().encode('utf-8')
-
         # Generate the SHA256 hash of the email
-        digest = hashlib.sha256(email_encoded).hexdigest()
-        
+        digest = hashlib.sha256(email_encoded).hexdigest()        
         # construct url
         identicon_url = 'https://www.gravatar.com/avatar/{}?d=identicon&s={}'.format(digest, size)
 
@@ -64,6 +66,7 @@ class User(db.Model, UserMixin):
 
     @classmethod
     def find_by_email(cls, email: str) -> "User":
+
         return cls.query.filter_by(email=email).first()
 
     @classmethod
@@ -77,7 +80,7 @@ class User(db.Model, UserMixin):
         return cls.query.filter(id=_id).first()
 
     @classmethod
-    def find_all(cls) -> "list()":
+    def find_all(cls):
         return cls.query.all()
     
     def save(self):
@@ -108,4 +111,25 @@ class User(db.Model, UserMixin):
             setattr(self, property, value)
             #print(f'property {property} set to {value}')
         db.session.commit()
-    
+
+    def generate_confirmation_token(self, expires_in=3600):
+        
+        # For jwt.encode(), expiration is provided as a time in UTC
+        # It is set through the "exp" key in the data to be tokenized
+        data = {"exp": time() + expires_in, "confirm_id": self.id}
+        
+        return jwt.encode(data, current_app.secret_key, algorithm="HS512")
+
+    @staticmethod
+    def confirm_token(token):
+        try:
+            # Ensure token valid and hasn't expired
+            data = jwt.decode(token, current_app.secret_key, algorithms=["HS512"])
+        except jwt.ExpiredSignatureError:
+            return "Token has expired"
+        except jwt.InvalidSignatureError as e:
+            return "Invalid signature"
+        except jwt.InvalidTokenError:
+            return "Invalid token"
+
+        return db.session.get(User, data.get("confirm_id"))

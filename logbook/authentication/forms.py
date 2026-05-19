@@ -1,11 +1,11 @@
 # -*- encoding: utf-8 -*-
 """
-Copyright (c) 2019 - present AppSeed.us
+Authentication Forms
 """
 
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField
-from wtforms.validators import Email, DataRequired
+from wtforms import StringField, EmailField, PasswordField, SubmitField
+from wtforms.validators import Email, DataRequired, EqualTo
 
 # login and registration
 
@@ -28,3 +28,17 @@ class CreateAccountForm(FlaskForm):
     password = PasswordField('Password',
                             id='pwd_create',
                             validators=[DataRequired()])
+
+# send password reset link
+class ResetPasswordLink(FlaskForm):
+
+    email = EmailField('Email', validators=[DataRequired(), Email()])
+    send = SubmitField('Reset Password')
+
+# reset password, given link
+class ResetPasswordForm(FlaskForm):
+
+    password = PasswordField('Password', validators=[DataRequired()])
+    password2 = PasswordField(
+        'Repeat Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Reset Your Password')

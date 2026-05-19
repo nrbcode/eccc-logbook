@@ -19,7 +19,6 @@ class LogbookForm(FlaskForm):
                          validators=[InputRequired()])
     submit_entry = SubmitField('Submit')
     #checklist = FieldList(StringField("Controls"))
-    
 
 class EditProfileForm(FlaskForm):
     firstname = StringField('FirstName',
@@ -31,6 +30,3 @@ class EditProfileForm(FlaskForm):
     bio = TextAreaField('Aboutprofile',
                         id='edit_bio',
                         validators=[DataRequired()])
-
-    
-

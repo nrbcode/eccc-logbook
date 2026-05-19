@@ -1,10 +1,11 @@
-Flask
+flask
 Gunicorn
 WTForms
 flask-login
 flask_wtf
 flask-sqlalchemy
 flask-bcrypt
-email_validator
+flask-mail
 python-dotenv
 psycopg2
+PyJWT

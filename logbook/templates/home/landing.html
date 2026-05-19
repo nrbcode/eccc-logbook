@@ -67,7 +67,7 @@
                         <form role="form" method="post" action="login">
 
                             {{ form.hidden_tag() }}
-
+                            
                             <div class="input-group mb-3">
                                 {{ form.username(placeholder="Username", class="form-control") }}
                             </div>
@@ -81,6 +81,7 @@
                         </form>
 
                         <p class="mb-0 text-muted">Don’t have an account? <a href="{{ url_for('authentication_blueprint.register') }}">Sign UP</a></p>
+                        <p class="mb-0 text-muted">Have a registered email? <a href="/reset-password">Reset Password</a></p>
 
                     </div>
                 </div>
@@ -96,7 +97,7 @@
         </main>
 
         <footer class="mt-auto text-white-50">
-            <p>Developed by <a href="#" class="text-white">softpowerware</a>.</p>
+            <p>v0.1, developed by <a href="#" class="text-white">softpowerware</a>.</p>
             <!-- , using <a href="https://getbootstrap.com/" class="text-white">Bootstrap</a> -->
         </footer>
     </div>
