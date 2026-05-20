@@ -193,6 +193,7 @@ def verify_email(token):
 
 #******************************************************************************
 # Callbacks
+
 @lm.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))  #if this changes to a string, remove int
@@ -209,6 +210,7 @@ def request_loader(request):
 
 #******************************************************************************
 # Errors
+
 @lm.unauthorized_handler
 def unauthorized_handler():
     return render_template('home/page-403.html'), 403
