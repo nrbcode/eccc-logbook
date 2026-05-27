@@ -1,9 +1,9 @@
 # -*- encoding: utf-8 -*-
 """
-Copyright (c) 2019 - present AppSeed.us
+Configuration and settings
 """
 
-import os, random, string
+import os, secrets
 
 class Config(object):
 
@@ -13,9 +13,7 @@ class Config(object):
     ASSETS_ROOT = os.getenv('ASSETS_ROOT', '/static/assets')
     
     # Set up the App secret key
-    SECRET_KEY  = os.getenv('FLASK_SECRET_KEY', None)
-    if not SECRET_KEY:
-        SECRET_KEY = ''.join(random.choice( string.ascii_lowercase ) for i in range( 32 ))
+    SECRET_KEY  = os.getenv('FLASK_SECRET_KEY', secrets.token_hex())
     
     # Configure the textual database
     SQLALCHEMY_TRACK_MODIFICATIONS = False
@@ -33,8 +31,8 @@ class Config(object):
     else:
         SQLALCHEMY_DATABASE_URI = DATABASE_URL
     
-    # SMTP credentials
-    MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER')
+    # Email server credentials
+    MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER', 'SafetyBase Admin <Admin@safetybase-aus.info>')
     RESEND_API_KEY      = os.getenv('RESEND_API_KEY')
 
 class ProductionConfig(Config):

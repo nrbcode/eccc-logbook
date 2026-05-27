@@ -45,12 +45,6 @@
                                     <div class="card-header">
                                         <h5>LOGBOOK</h5>
                                         <span class="d-block m-t-5">A record of work activities with risk of RCS exposure.</span>
-                                        {% if not admin %}
-                                        <div class="text-right">
-                                            <a class="btn btn-primary text-right" type="button" href={{ url_for('activity_blueprint.new_logbook_entry') }}
-                                               title="add new entry to your logbook" data-toggle="tooltip" aria-controls="addLog">Add Entry to Logbook</a>
-                                        </div>
-                                        {% endif %}
                                     </div>
                                     <div class="card-block table-border-style">
                                         <div class="table-responsive">
@@ -120,6 +114,12 @@
                                         </nav>
                                         {% endif %}
                                     </div>
+                                    {% if not admin %}
+                                    <div class="card-footer">
+                                        <a class="btn btn-primary" type="button" href={{ url_for('activity_blueprint.new_logbook_entry') }}
+                                           title="add new entry to your logbook" data-toggle="tooltip" aria-controls="addLog">Add Entry to Logbook</a>
+                                    </div>
+                                    {% endif %}
                                 </div>
                             </div>
                             <!-- [ basic-table ] end -->

@@ -54,11 +54,11 @@ def login():
             msg = "Email not yet verified"
 
         # Something (user or pass or verified) is not ok
-        return render_template('home/landing.html',
+        return render_template('accounts/login.html',
                                msg=msg,
                                form=login_form)
 
-    return render_template('home/landing.html', form=login_form)
+    return render_template('accounts/login.html', form=login_form)
 
 @blueprint.route('/register', methods=['GET', 'POST'])
 def register():
