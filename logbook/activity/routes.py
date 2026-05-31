@@ -2,7 +2,6 @@
 """
 Logbook Activity
 """
-import json
 from datetime import datetime
 
 from flask import render_template, redirect, request, url_for, jsonify
@@ -14,9 +13,6 @@ from .forms import LogbookForm, EditProfileForm
 from .models import LogEntry
 from ..utilities import get_segment
 from logbook.authentication.models import User
-
-
-CONTROLS = dict(enumerate(CONTROL_MEASURES, start=1))
 
 
 #******************************************************************************
@@ -48,17 +44,12 @@ def new_logbook_entry():
     
     if logbook_entry.validate_on_submit():
 
-        # convert list integers to strings
-        cl = request.form.getlist("cl")
-        controls = [CONTROLS[int(num)] for num in cl]
-        
-        #logbook_entry.populate_obj(newentry) 
         newentry = {
             "site": logbook_entry.job_site.data,
             "date": logbook_entry.job_date.data,
             "activity": logbook_entry.job_task.data,
             "duration": float(request.form.get("job_duration")),
-            "controls": json.dumps(controls),
+            "controls": '; '.join(request.form.getlist("controls")),
             "concretor_id": current_user.id
             }
         
@@ -67,8 +58,8 @@ def new_logbook_entry():
 
         return redirect(url_for('.my_logbook'))
     
-    return render_template( 'logbook/new-entry.html',
-                           checklist = enumerate(CONTROL_MEASURES, start=1),
+    return render_template('logbook/new-entry.html',
+                           controls = CONTROL_MEASURES,
                            segment = 'logbook',
                            datetimenow = datetime.now(),
                            form = logbook_entry)

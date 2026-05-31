@@ -66,8 +66,17 @@
                                 </div>
                                 <div class="col-sm-8">
                                     <div class="card">
-                                        <div class="card-header">
-                                            <h5>Concretor</h5>
+                                        <div class="card-header">                                            
+                                            <div class="row">
+                                                <div class="col-sm-9">
+                                                    <h5>Concretor</h5>
+                                                </div>
+                                                <div class="col-sm-3 text-center">
+                                                    <a title="Edit your profile here." class="h6 text-muted d-block m-1" data-toggle="tooltip" aria-controls="profileTooltip">
+                                                        <i class="icon feather icon-help-circle"></i>
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="card-body">
                                             <dl class="dl-horizontal row">
@@ -85,8 +94,8 @@
                                                 <dd class="col-sm-9">{{ current_user.bio | default('no biography yet', True) }}</dd>
                                             </dl>
                                         </div>
-                                        <div class="card-block">
-                                            <a class="btn btn-primary m-t-5" href={{ url_for('activity_blueprint.edit_profile') }} role="button" title="update or edit your profile" data-toggle="tooltip" aria-controls="editProfile">Edit profile</a>
+                                        <div class="card-footer">
+                                            <a class="btn btn-primary m-t-5" href={{ url_for('activity_blueprint.edit_profile') }} role="button" aria-controls="editProfile">Edit profile</a>
                                         </div>
                                     </div>
                                 </div>

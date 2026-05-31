@@ -103,15 +103,19 @@
 
                                         <!-- checklist -->
                                         <div class="card-block">
-                                            {% for list_num, safety_item in checklist %}
-                                            <!-- styles declared inside this loop -->
-                                            <ul class="custom-control custom-checkbox">
-                                                <li>
-                                                    <input type="checkbox" class="custom-control-input" id={{ list_num }} value={{ list_num }} name="cl">
-                                                    <label class="custom-control-label" for={{ list_num }}>{{ safety_item }}</label>
-                                                </li>
-                                            </ul>
-                                            {% endfor %}
+
+                                            <fieldset>
+                                                <div class="form-group form-check">
+                                                    {% for control in controls %}
+                                                    <p>
+                                                        <input type="checkbox" class="form-check-input" id={{ control }} name="controls" value="{{ control }}">
+                                                        <label class="form-check-label" for={{ control }}>{{ control }}</label>
+                                                    </p>
+                                                    {% endfor %}
+                                                </div>
+                                                <legend>Control Measures Deployed</legend>
+                                            </fieldset>
+
                                         </div>
 
                                         <div class="card-block">
