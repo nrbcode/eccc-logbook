@@ -83,20 +83,20 @@
                                                     }}
 
                                                     <!-- duration -->
-                                                    <label for="duration-bar2">
-                                                        Duration: <output class="price-output"></output> hours.
-                                                    </label>
                                                     <div class="form-control">
+                                                        <label for="duration-bar">
+                                                            Duration: <output class="bar-output"></output> hours.
+                                                        </label>
                                                         <input type="range"
                                                                class="custom-range"
                                                                name="job_duration"
-                                                               id="duration-bar2"
+                                                               id="duration-bar"
                                                                min="0"
-                                                               max="10"
+                                                               max="8"
                                                                step="0.25"
                                                                value="1" />
                                                     </div>
-
+                                                    
                                                 </div>
                                             </div>
                                         </div>
@@ -148,23 +148,15 @@
 {% block javascripts %}
 
 <script>
-    const price = document.querySelector("#duration-bar2");
-    const output = document.querySelector(".price-output");
+    const period = document.querySelector("#duration-bar");
+    const output = document.querySelector(".bar-output");
 
-    output.textContent = price.value;
+    output.textContent = period.value;
 
-    price.addEventListener("input", () => {
-        output.textContent = price.value;
+    period.addEventListener("input", () => {
+        output.textContent = period.value;
     });
-
-    //var slider = document.getElementById("duration-bar2");
-    //var output = document.querySelector(".duration-output");
-    //output.innerHTML = slider.value; // Display the default slider value
-
-    // Update the current slider value (each time you drag the slider handle)
-    slider.oninput = function () {
-        output.innerHTML = this.value;
-    } 
+    
 </script>
 
 {% endblock javascripts %}
