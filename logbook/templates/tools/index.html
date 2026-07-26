@@ -52,7 +52,6 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Tool</th>
-                                                        <th>Model</th>
                                                         <th>Added</th>
                                                         <th scope="col">&nbsp;</th>
                                                     </tr>
@@ -63,10 +62,8 @@
                                                     <tr>
                                                         <td>
                                                             <h6 class="m-0">{{ tool.brand_name }}</h6>
+                                                            <p>{{ tool.model_number }}</p>
                                                             <p class="m-0">{{ tool.tool_name }}</p>
-                                                        </td>
-                                                        <td>
-                                                            <h6 class="m-0">{{ tool.model_number }}</h6>
                                                         </td>
                                                         <td>
                                                             <h6 class="m-0 text-c-blue">{{ tool.added_at.strftime('%d/%m/%Y') }}</h6>
@@ -93,7 +90,6 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Tool</th>
-                                                        <th>Model</th>
                                                         <th>Tagged</th>
                                                         <th scope="col">&nbsp;</th>
                                                     </tr>
@@ -104,10 +100,8 @@
                                                     <tr>
                                                         <td>
                                                             <h6 class="m-0">{{ tool.brand_name }}</h6>
+                                                            <p class="m-0">{{ tool.model_number }}</p>
                                                             <p class="m-0">{{ tool.tool_name }}</p>
-                                                        </td>
-                                                        <td>
-                                                            <h6 class="m-0">{{ tool.model_number }}</h6>
                                                         </td>
                                                         <td>
                                                             {% if not tags[tool.id] %}
@@ -151,7 +145,6 @@
                                                 <thead>
                                                     <tr>
                                                         <th>Tool</th>
-                                                        <th>Model</th>
                                                         <th>Added</th>
                                                         <th scope="col">&nbsp;</th>
                                                     </tr>
@@ -162,11 +155,8 @@
                                                     <tr>
                                                         <td>
                                                             <h6 class="m-0">{{ tool.brand_name }}</h6>
-                                                            <p class="m-0">{{ tool.tool_name }}</p>
                                                             <p class="m-0">{{ tool.model_number }}</p>
-                                                        </td>
-                                                        <td>
-                                                            <h6 class="m-0">{{ tool.model_number }}</h6>
+                                                            <p class="m-0">{{ tool.tool_name }}</p>
                                                         </td>
                                                         <td>
                                                             <h6 class="m-0 text-c-blue">{{ tool.added_at.strftime('%d/%m/%Y') }}</h6>
