@@ -108,6 +108,7 @@ venv.bak/
 
 # vs
 *.pyproj
+.vs/
 
 # local development
 runserver.py

@@ -8,12 +8,13 @@ from flask import render_template, redirect, request, url_for, jsonify
 from flask_login import current_user, login_required
 
 from . import blueprint
-from .constants import CONTROL_MEASURES
 from .forms import LogbookForm, EditProfileForm
 from .models import LogEntry
-from ..utilities import get_segment
-from logbook.authentication.models import User
 
+#import logbook
+from logbook.constants import CONTROL_MEASURES#, COURSE_LIST
+from logbook.utilities import get_segment, role_required
+from logbook.authentication.models import User
 
 #******************************************************************************
 # GUI views
@@ -26,11 +27,10 @@ def my_logbook():
     page_num = request.args.get('page', 1, type=int)
     entries = LogEntry.find_by_concretor(_id=current_user.id).paginate(
         page=page_num, per_page=5, error_out=False)
-    segment = get_segment(request)
-
-    return render_template( 'logbook/index.html',
+    
+    return render_template('logbook/index.html',
                            entries=entries,
-                           segment=segment,
+                           segment=get_segment(request),
                            page=page_num,
                            per_page=5
                            )
@@ -96,10 +96,19 @@ def edit_profile():
                           segment='profile')
 
 #******************************************************************************
+# Errors
+
+@blueprint.errorhandler(403)
+def access_forbidden(error):
+    print(error)
+    return render_template('home/page-403.html'), 403
+
+#******************************************************************************
 # Admin views
 
 @blueprint.get('/all-logbook')
 @login_required
+@role_required('foreman', 'admin')
 def view_logbook():
 
     """    Table of pre-start records.    """
@@ -123,7 +132,9 @@ def view_logbook():
 @login_required
 def all_concretors():
     users = User.query.all()
-    return render_template('logbook/concretors.html', concretors=users)
+    return render_template('logbook/concretors.html',
+                           concretors=users,
+                           admin=False)
 
 #******************************************************************************
 # API

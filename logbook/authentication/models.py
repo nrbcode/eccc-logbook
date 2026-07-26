@@ -9,7 +9,7 @@ from time import time
 from flask import current_app
 from flask_login import UserMixin
 from sqlalchemy import func
-from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy.exc import SQLAlchemyError, IntegrityError
 from sqlalchemy.orm.attributes import set_attribute
 
 from logbook import db
@@ -27,8 +27,10 @@ class User(db.Model, UserMixin):
     lastname      = db.Column(db.String(64), nullable=True)
     address       = db.Column(db.String(64), nullable=True)
     bio           = db.Column(db.String(64), nullable=True)
-    created_at    = db.Column(db.DateTime)
-    verified      = db.Column(db.Boolean, default=False)  # Email verification status
+    created_at    = db.Column(db.DateTime, server_default=func.now())
+    #created_at    = db.Column(db.DateTime)
+    is_verified   = db.Column(db.Boolean, default=False) # Email verification status
+    role          = db.Column(db.String(50), nullable=False, default='concretor') # concretor; foreman; admin; webmaster
 
     def __init__(self, **kwargs):
         for property, value in kwargs.items():
@@ -38,7 +40,13 @@ class User(db.Model, UserMixin):
                 # the ,= unpack of a singleton fails PEP8 (travis flake8 test)
                 value = value[0]
             setattr(self, property, value)
-        set_attribute(self, "created_at", func.now())
+        #set_attribute(self, "created_at", func.now())
+        
+        # allocate access privileges
+        if self.email == current_app.config['ADMIN_EMAIL']:
+            set_attribute(self, "role", "admin")
+        elif self.email in current_app.config['FOREMEN_EMAIL_LIST']:
+            set_attribute(self, "role", "foreman")
     
     def __repr__(self):
         return self.username
@@ -83,29 +91,36 @@ class User(db.Model, UserMixin):
     def find_all(cls):
         return cls.query.all()
     
-    def save(self):
+    def save(self) -> None:
         try:
+            # Perform database operations
             db.session.add(self)
             db.session.commit()
-          
+        except IntegrityError as e:
+            db.session.rollback()  # Crucial to undo failed states
+            print(f"Data validation or constraint failed: {e}")
         except SQLAlchemyError as e:
-            db.session.rollback()
-            db.session.close()
-            error = str(e.__dict__['orig'])
-            raise InvalidUsage(error, 422)
-        return self
+            db.session.rollback()  # Protect transaction integrity
+            print(f"A general SQLAlchemy error occurred: {e}")
+        else:
+            print("Database operation on logbook_users completed successfully.")
+        #finally:            db.session.close()  # Clean up and release the connection resource
 
     def delete_from_db(self) -> None:
         try:
             db.session.delete(self)
             db.session.commit()
+        except IntegrityError as e:
+            db.session.rollback()  # Crucial to undo failed states
+            print(f"Data validation or constraint failed: {e}")
         except SQLAlchemyError as e:
-            db.session.rollback()
-            db.session.close()
-            error = str(e.__dict__['orig'])
-            raise InvalidUsage(error, 422)
-        return
-
+            db.session.rollback()  # Protect transaction integrity
+            print(f"A general SQLAlchemy error occurred: {e}")
+        else:
+            print("Database operation completed successfully.")
+        finally:
+            db.session.close()  # Clean up and release the connection resource
+        
     def update_user(self, details):
         for property, value in details.items():
             setattr(self, property, value)

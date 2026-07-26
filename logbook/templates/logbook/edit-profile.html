@@ -89,15 +89,17 @@
                                                     {{ current_user.username }}
                                                 </h4>
                                                 <p class="font-italic text-muted">
-                                                    {% if current_user.email %} {{ current_user.email }} {% endif %}
+                                                    {{ current_user.email }}
                                                 </p>
-                                                <p>{{ current_user.firstname }} {{ current_user.lastname }}</p>
+                                                <p>
+                                                    {{ current_user.firstname | default('no first name yet, ', True) }}
+                                                    {{ current_user.lastname | default('no last name yet', True) }}
+                                                </p>
                                             </div>
                                         </div>
                                         <div class="small font-weight-light mt-4 text-center text-muted">
                                             <p>
-                                                {{ current_user.bio }}
-                                                <br />
+                                                {{ current_user.bio | default('no biography yet', True) }}
                                             </p>
                                         </div>
                                     </div>

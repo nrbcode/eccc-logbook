@@ -29,6 +29,9 @@
                             <div class="page-header-title col-sm-9">
                                 <h5 class="m-b-10">{{ current_user.username }}</h5>
                             </div>
+                            <div class="col-auto text-right">
+                                <a class="btn btn-outline-secondary m-t-5" href="my-logbook/new" role="button">Make New Entry</a>
+                            </div>
                             {% endif %}
                         </div>
                     </div>
@@ -114,12 +117,6 @@
                                         </nav>
                                         {% endif %}
                                     </div>
-                                    {% if not admin %}
-                                    <div class="card-footer">
-                                        <a class="btn btn-primary" type="button" href={{ url_for('activity_blueprint.new_logbook_entry') }}
-                                           aria-controls="addLog">Add Entry to Logbook</a>
-                                    </div>
-                                    {% endif %}
                                 </div>
                             </div>
                             <!-- [ basic-table ] end -->

@@ -93,6 +93,8 @@
                                                 <!-- <dt class="col-sm-3 text-truncate">Biography (a short summary)</dt> -->
                                                 <dt class="col-sm-3">Biography</dt>
                                                 <dd class="col-sm-9">{{ current_user.bio | default('no biography yet', True) }}</dd>
+                                                <dt class="col-sm-3">Role</dt>
+                                                <dd class="col-sm-9">{{ current_user.role }}</dd>
                                             </dl>
                                         </div>
 

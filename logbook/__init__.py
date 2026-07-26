@@ -1,6 +1,6 @@
 # -*- encoding: utf-8 -*-
 """
-Copyright (c) 2019 - present AppSeed.us
+Copyright (c) 2026 - present, softpowerware
 """
 
 from dotenv import load_dotenv
@@ -22,12 +22,10 @@ def register_extensions(app):
     db.init_app(app)
     lm.init_app(app)
 
-
 def register_blueprints(app):
-    for module_name in ('authentication', 'activity'):
+    for module_name in ('authentication', 'activity', 'tools'):
         module = import_module('logbook.{}.routes'.format(module_name))
         app.register_blueprint(module.blueprint)
-
 
 def configure_database(app):
 
@@ -39,7 +37,6 @@ def configure_database(app):
         # remote database
         with app.app_context():
             db.create_all()
-    
     
 def create_app(config):
     app = Flask(__name__)

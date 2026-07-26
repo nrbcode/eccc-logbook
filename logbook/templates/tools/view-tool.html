@@ -1,0 +1,141 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}View Tool{% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <!-- [ breadcrumb ] start -->
+                    <div class="page-header">
+                        <div class="page-block">
+                            <div class="row align-items-center">
+                                <div class="col-md-12">
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                        <li class="breadcrumb-item"><a href="/tools/my-tools">My Tools</a></li>
+                                        <li class="breadcrumb-item">View</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ breadcrumb ] end -->
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <!-- first view card start -->
+                                <div class="col-sm-8">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>View Tool</h5>
+                                            <span class="d-block m-t-5">view a tool in the <code>tool register</code> here</span>
+                                        </div>
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-4">
+                                                    <img style="width:130px;" alt="tool image"
+                                                         src={{ url | default(config.ASSETS_ROOT + "/images/tool-default.jpg", true) }} class="img-fluid"><br />
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <p>{{ tool }}</p>
+                                                    {% if tag %}<p>{{ tag }}</p>{% endif %}
+                                                    {% if url %}<a href={{ url }}><code>cloud image</code></a>{% else %}Image not provided.{% endif %}<br />
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="card-footer">
+                                            <div class="row">
+                                                <div class="col-sm-12">
+                                                    <div class="card">
+                                                        <div class="card-header">
+                                                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#imageUploadForm" aria-expanded="false" aria-controls="imageUploadForm"><i class="feather icon-camera"></i> Update Picture</button>
+                                                            {% if tool.tool_type == 'corded' %}<!-- Button trigger modal -->
+                                                            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#changeTag"><i class="feather icon-tag"></i> Test & Tag</button>
+                                                            {% endif %}
+                                                        </div>
+                                                        <div class="collapse" id="imageUploadForm">
+                                                            <div class="card-body">
+                                                                <form method="post" enctype="multipart/form-data" action={{ url_for('tools_blueprint.view_tool', _id=tool.id) }}>
+                                                                    {{ fileform.hidden_tag() }}
+                                                                    <h5>{{ fileform.upload.label }}</h5>
+                                                                    <div class="input-group mb-3">
+                                                                        {{ fileform.upload(class="form-control-file") }}
+                                                                    </div>
+                                                                    {{ fileform.submit(class="btn btn-warning btn-round") }}
+                                                                </form>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Modal Content -->
+                                        <div class="modal fade" id="changeTag" tabindex="-1" role="dialog" aria-labelledby="changeTagLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <form class="form-inline" method=post role="form" action={{ url_for('tools_blueprint.view_tool', _id=tool.id) }} >
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="changeTagLabel">Tag Corded Tool {{ tool.tool_name, tool.id }}</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="modal-body">
+
+                                                            {{ tagform.hidden_tag() }}
+
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">{{ tagform.tag_date.label }}</span>
+                                                                </div>
+                                                                {{ tagform.tag_date(class="form-control", value=datetimenow.strftime('%Y-%m-%d')) }}
+                                                            </div>
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text" id="basic-addon1">{{ tagform.tag_num.label }}</span>
+                                                                </div>
+                                                                {{ tagform.tag_num(class="form-control") }}
+                                                            </div>
+                                                            <div class="input-group mb-3">
+                                                                <div class="input-group-prepend">
+                                                                    <span class="input-group-text">{{ tagform.next_test.label }}</span>
+                                                                </div>
+                                                                {{ tagform.next_test(class="form-control") }}
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                                            {{ tagform.submit(class="btn btn-warning btn-round") }}
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                        <!-- End of Modal Content -->
+
+                                    </div>
+                                </div>
+                                <!-- first view card end -->
+                            </div>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

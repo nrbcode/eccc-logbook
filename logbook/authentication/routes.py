@@ -41,7 +41,7 @@ def login():
             # unknown user
             msg = "Unknown username"
 
-        elif user.verified:
+        elif user.is_verified:
 
             # Check the password
             if bc.check_password_hash(user.pw_hash, p):
@@ -183,10 +183,10 @@ def verify_email(token):
     user = User.confirm_token(token)
     if not user:
         return "Invalid or expired verification link."
-    elif user.verified:
+    elif user.is_verified:
         return "Account already verified."
     else:
-        user.update_user({'verified': True})
+        user.update_user({'is_verified': True})
         logout_user()
 
         return redirect(url_for('.login'))

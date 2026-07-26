@@ -1,0 +1,206 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Tool Register{% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <!-- [ breadcrumb ] start -->
+                    <div class="page-header">
+                        <div class="page-block">
+                            <div class="row align-items-center">
+                                <div class="page-header-title col-sm-9">
+                                    <h5 class="m-b-10">Tool Register</h5>
+                                </div>
+                                <div class="col-auto text-right">
+                                    <a class="btn btn-outline-secondary m-t-5" href="my-tools/new" role="button">Register New Tool</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ breadcrumb ] end -->
+                    <div class="main-body">
+                        <div class="page-wrapper">
+
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <div class="col-xl-8 col-md-12 m-b-30">
+                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" id="corded-tab" data-toggle="tab" href="#corded"
+                                               role="tab" aria-controls="corded" aria-selected="true">Corded</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="battery-tab" data-toggle="tab" href="#battery"
+                                               role="tab" aria-controls="battery" aria-selected="false">Battery</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" id="petrol-tab" data-toggle="tab" href="#petrol"
+                                               role="tab" aria-controls="petrol" aria-selected="false">Petrol</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content" id="myTabContent">
+                                        <div class="tab-pane fade" id="battery" role="tabpanel" aria-labelledby="battery-tab">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Tool</th>
+                                                        <th>Model</th>
+                                                        <th>Added</th>
+                                                        <th scope="col">&nbsp;</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    {% for tool in tools if tool.tool_type=="battery" %}
+                                                    <tr>
+                                                        <td>
+                                                            <h6 class="m-0">{{ tool.brand_name }}</h6>
+                                                            <p class="m-0">{{ tool.tool_name }}</p>
+                                                        </td>
+                                                        <td>
+                                                            <h6 class="m-0">{{ tool.model_number }}</h6>
+                                                        </td>
+                                                        <td>
+                                                            <h6 class="m-0 text-c-blue">{{ tool.added_at.strftime('%d/%m/%Y') }}</h6>
+                                                        </td>
+                                                        <td>
+                                                            <div class="btn-group mb-2 mr-2">
+                                                                <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit</button>
+                                                                <div class="dropdown-menu">
+                                                                    <a class="dropdown-item" href={{ url_for('.view_tool', _id=tool.id) }}><span class="fas fa-eye me-2"></span> View</a>
+                                                                    <a class="dropdown-item" href={{ url_for('.delete_tool', _id=tool.id) }}><span class="fas fa-trash-alt me-2"></span> Remove</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <!-- corded tools -->
+                                        <div class="tab-pane fade active show" id="corded" role="tabpanel" aria-labelledby="corded-tab">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Tool</th>
+                                                        <th>Model</th>
+                                                        <th>Tagged</th>
+                                                        <th scope="col">&nbsp;</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    {% for tool in tools if tool.tool_type=="corded" %}
+                                                    <tr>
+                                                        <td>
+                                                            <h6 class="m-0">{{ tool.brand_name }}</h6>
+                                                            <p class="m-0">{{ tool.tool_name }}</p>
+                                                        </td>
+                                                        <td>
+                                                            <h6 class="m-0">{{ tool.model_number }}</h6>
+                                                        </td>
+                                                        <td>
+                                                            {% if not tags[tool.id] %}
+                                                            No tag!
+                                                            {% elif (datetimenow-tags[tool.id].tag_date).days < 77 %}
+                                                            <i class="fas fa-circle text-success f-10"></i>
+                                                            <p class="text-success mb-1">
+                                                                {{ tags[tool.id].tag_date.strftime('%d/%m/%Y') }}
+                                                            </p>
+                                                            {% elif (datetimenow-tags[tool.id].tag_date).days < 90 %}
+                                                            <i class="fas fa-circle text-warning f-10"></i>
+                                                            <p class="text-warning mb-1">
+                                                                {{ tags[tool.id].tag_date.strftime('%d/%m/%Y') }}
+                                                            </p>
+                                                            {% else %}
+                                                            <i class="fas fa-circle text-danger f-10"></i>
+                                                            <p class="text-danger mb-1">
+                                                                {{ tags[tool.id].tag_date.strftime('%d/%m/%Y') }}
+                                                            </p>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            <div class="btn-group mb-2 mr-2">
+                                                                <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit</button>
+                                                                <div class="dropdown-menu">
+                                                                    <a class="dropdown-item" href={{ url_for('.view_tool', _id=tool.id) }}><span class="fas fa-eye me-2"></span> View</a>
+                                                                    <a class="dropdown-item" href={{ url_for('.delete_tool', _id=tool.id) }}><span class="fas fa-trash-alt me-2"></span> Remove</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+
+                                        <!-- petrol powered tools -->
+                                        <div class="tab-pane fade" id="petrol" role="tabpanel" aria-labelledby="petrol-tab">
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Tool</th>
+                                                        <th>Model</th>
+                                                        <th>Added</th>
+                                                        <th scope="col">&nbsp;</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+
+                                                    {% for tool in tools if tool.tool_type=="petrol" %}
+                                                    <tr>
+                                                        <td>
+                                                            <h6 class="m-0">{{ tool.brand_name }}</h6>
+                                                            <p class="m-0">{{ tool.tool_name }}</p>
+                                                            <p class="m-0">{{ tool.model_number }}</p>
+                                                        </td>
+                                                        <td>
+                                                            <h6 class="m-0">{{ tool.model_number }}</h6>
+                                                        </td>
+                                                        <td>
+                                                            <h6 class="m-0 text-c-blue">{{ tool.added_at.strftime('%d/%m/%Y') }}</h6>
+                                                        </td>
+                                                        <td>
+                                                            <div class="btn-group mb-2 mr-2">
+                                                                <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Edit</button>
+                                                                <div class="dropdown-menu">
+                                                                    <a class="dropdown-item" href={{ url_for('.view_tool', _id=tool.id) }}><span class="fas fa-eye me-2"></span> View</a>
+                                                                    <a class="dropdown-item" href={{ url_for('.delete_tool', _id=tool.id) }}><span class="fas fa-trash-alt me-2"></span> Remove</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
+
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- [ Main Content ] end -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -25,15 +25,24 @@ class Config(object):
     DB_PORT         = os.getenv('DB_PORT')
     DB_NAME         = os.getenv('DB_NAME')
 
-    # try to set up a Relational DBMS
+    # Set up a Relational DBMS
     if not DATABASE_URL:
         SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'db.sqlite3')
     else:
         SQLALCHEMY_DATABASE_URI = DATABASE_URL
     
+    # Configure the image database
+    IMAGEKIT_SECRET = os.getenv('IMAGEKIT_PRIVATE_KEY')
+    MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 16 MB max file size
+
     # Email server credentials
-    MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER', 'SafetyBase Admin <Admin@safetybase-aus.info>')
+    MAIL_DEFAULT_SENDER = os.getenv('MAIL_DEFAULT_SENDER', 'SafetyBase Admin <Admin@safetybase-aus.link>')
     RESEND_API_KEY      = os.getenv('RESEND_API_KEY')
+
+    # Set privilege by email account
+    ADMIN_EMAIL = os.getenv('ADMIN_EMAIL')
+    FOREMEN_EMAIL_LIST = os.getenv('FOREMEN_EMAIL_LIST')
+
 
 class ProductionConfig(Config):
     DEBUG = False
@@ -43,8 +52,10 @@ class ProductionConfig(Config):
     REMEMBER_COOKIE_HTTPONLY = True
     REMEMBER_COOKIE_DURATION = 3600
 
+
 class DebugConfig(Config):
     DEBUG = True
+
 
 # Load all possible configurations
 config_dict = {

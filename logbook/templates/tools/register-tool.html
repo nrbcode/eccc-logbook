@@ -1,0 +1,112 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Tool Register{% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <!-- [ breadcrumb ] start -->
+                    <div class="page-header">
+                        <div class="page-block">
+                            <div class="row align-items-center">
+                                <div class="col-sm-9">
+                                    <div class="page-header-title">
+                                        <h5 class="m-b-10">Register Tool</h5>
+                                    </div>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                        <li class="breadcrumb-item"><a href="/tools/my-tools">My Tools</a></li>
+                                        <li class="breadcrumb-item"><a href="javascript:">New</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ breadcrumb ] end -->
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <!-- [ basic-table ] start -->
+                                <div class="col-xl-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>New Tool</h5>
+                                            <span class="d-block m-t-5">add a new tool to the <code>tool register</code> here</span>
+                                        </div>
+
+                                        <form role="form" method="post" action="/tools/my-tools/new" >
+
+                                            {{ toolform.hidden_tag() }}
+
+                                            <div class="card-block">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            {{ toolform.brand_name.label }}
+                                                            {{ toolform.brand_name(placeholder="Brand name", class="form-control") }}
+                                                        </div>
+                                                        <div class="form-group">
+                                                            {{ toolform.model_number.label }}
+                                                            {{ toolform.model_number(placeholder="Model number/code", class="form-control") }}
+                                                        </div>
+
+                                                        <!-- start wtform radio -->
+                                                        <label>{{ toolform.tool_type.label }}</label>
+                                                        {% for task in toolform.tool_type %}
+                                                        <div class="custom-control custom-radio">
+                                                            {{ task(class="custom-control-input") }}
+                                                            {{ task.label(class="custom-control-label") }}<br />
+                                                        </div>
+                                                        {% endfor %}<br />
+                                                        <!-- end wtform radio -->
+
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            {{ toolform.tool_name.label }}
+                                                            {{ toolform.tool_name(class="form-control")}}
+                                                        </div>
+                                                        <div class="form-group">
+                                                            {{ toolform.serial_num.label }}
+                                                            {{ toolform.serial_num(class="form-control", placeholder="321abc...") }}
+                                                        </div>
+                                                        <div class="form-group">
+                                                            {{ toolform.notes.label }}
+                                                            {{ toolform.notes(class="form-control",  rows="3", placeholder="Hilti tracking number,\nCondition,\nMarkings etc.") }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="card-block">
+                                                <div class="col-md-6">
+                                                    {{ toolform.submit(class="btn btn-warning btn-round") }}
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                                <!-- [ basic-table ] end -->
+                            </div>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
