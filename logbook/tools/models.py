@@ -95,13 +95,12 @@ class CordedTool(RegisteredTool):
     __tablename__ = 'corded_tools'
 
     id = db.Column(db.Integer, db.ForeignKey("tool_register.id"), primary_key=True)
-    tag_id = db.Column(db.Integer)
+    tag_id = db.Column(db.Integer) # current tag
     updated_at = db.Column(db.DateTime, onupdate=func.now()) # tag is changed
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
         #set_attribute(self, "tag_id", None)
-
     
     def update_tag(self, tag_id):
         set_attribute(self, "tag_id", tag_id)
@@ -113,25 +112,19 @@ class CordedToolTag(db.Model):
     __tablename__ = 'tool_tags'
 
     id = db.Column(db.Integer, primary_key=True)
-    tool_id = db.Column(db.Integer, db.ForeignKey("corded_tools.id"))# may not need this
+    tool_id = db.Column(db.Integer, db.ForeignKey("corded_tools.id"))
     tag_num = db.Column(db.Integer, nullable=True)
     tag_date = db.Column(db.DateTime)
     next_test = db.Column(db.DateTime)
 
     def __str__(self):
-        return f'Tool {self.tool_id} tagged {self.tag_date.strftime('%d/%m/%Y')}.'
+        return f'Tool No.{self.tool_id} tagged {self.tag_date.strftime('%d/%m/%Y')}.'
 
     @classmethod
     def find_by_toolid(cls, tool: int):
 
         return db.session.scalar(db.select(cls).filter_by(tool_id=tool).order_by(-cls.id))
 
-    @classmethod
-    def find_by_toolbox(cls, toolbox: List):
-        '''  Not used.  '''
-        tool_ids = [tool.id for tool in toolbox]
-        return db.session.scalars(db.select(cls.tool_id, cls.tag_date).where(cls.tool_id in tool_ids))
-        
     def save(self) -> None:
         try:
             # Perform database operations

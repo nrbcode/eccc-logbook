@@ -9,5 +9,5 @@ blueprint = Blueprint(
     'tools_blueprint',
     __name__,
     url_prefix='/tools',
-    template_folder='templates/tools'
+    template_folder='/templates/tools'
 )

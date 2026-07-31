@@ -2,7 +2,7 @@
 
 {% from '/includes/form-macros.html' import render_pagination %}
 
-{% block title %} Logbook {% endblock %}
+{% block title %}Tool Register{% endblock %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -18,10 +18,21 @@
                 <div class="page-header">
                     <div class="page-block">
                         <div class="row align-items-center">
-                            <div class="page-header-title col-sm-6">
+                            {% if admin %}
+                            <div class="col-sm-6">
+                                <div class="page-header-title">
+                                    <h5 class="m-b-10">{{ current_user.username }}</h5>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 text-primary">Administrator's query - All Tools</div>
+                            {% else %}
+                            <div class="page-header-title col-sm-9">
                                 <h5 class="m-b-10">{{ current_user.username }}</h5>
                             </div>
-                            <div class="col-sm-6 text-primary">Administrator's query - All Concretors</div>
+                            <div class="col-auto text-right">
+                                <a class="btn btn-outline-secondary m-t-5" href="my-logbook/new" role="button">Make New Entry</a>
+                            </div>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -35,29 +46,27 @@
                             <div class="col-xl-12">
                                 <div class="card">
                                     <div class="card-header">
-                                        <h5>Concretors</h5>
-                                        <span class="d-block m-t-5">A record of all registered concretors and foremen.</span>
+                                        <h5>{{ title }}</h5>
+                                        <span class="d-block m-t-5">{{ subtitle }}</span>
                                     </div>
-                                    <div class="card-block table-border-style">
+                                    <div class="card-body table-border-style">
                                         <div class="table-responsive">
                                             <table class="table">
                                                 <thead>
                                                     <tr>
                                                         <th>ID</th>
-                                                        <th>Username</th>
-                                                        <th>Email</th>
-                                                        <th>Registered</th>
-                                                        <th>Role</th>
+                                                        <th>Brand</th>
+                                                        <th>Model</th>
+                                                        <th>Added</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    {% for concretor in entries %}
+                                                    {% for tool in tools %}
                                                     <tr>
-                                                        <th scope="row">{{ concretor.id }}</th>
-                                                        <td>{{ concretor.username }}</td>
-                                                        <td>{{ concretor.email }}</td>
-                                                        <td>{{ concretor.created_at }}</td>
-                                                        <td>{{ concretor.role }}</td>
+                                                        <th scope="row">{{ tool.id }}</th>
+                                                        <td>{{ tool.brand_name }}</td>
+                                                        <td>{{ tool.model_number }}</td>
+                                                        <td>{{ tool.added_at }}</td>
                                                     </tr>
                                                     {% endfor %}
                                                 </tbody>
@@ -66,7 +75,7 @@
                                     </div>
                                     <div class="card-block">
                                         <hr>
-                                        {{ render_pagination(pagination=entries, endpoint='activity_blueprint.all_concretors') }}
+                                        {{ render_pagination(pagination=tools, endpoint='.all_tools') }}
                                     </div>
                                 </div>
                             </div>

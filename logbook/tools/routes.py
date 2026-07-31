@@ -33,6 +33,7 @@ def index():
                            )
     
 @blueprint.route('/my-tools/new', methods=['GET', 'POST'])
+@login_required
 @role_required('foreman', 'admin')
 def add_tool():
 
@@ -62,6 +63,8 @@ def add_tool():
     return render_template('tools/register-tool.html', toolform=addTool)
 
 @blueprint.route('/my-tools/<string:_id>', methods=['GET', 'POST'])
+@login_required
+@role_required('foreman', 'admin')
 def view_tool(_id):
 
     uploadImage = UploadImageForm()
@@ -136,6 +139,7 @@ def view_tool(_id):
 
 @blueprint.get('/my-tools/<string:_id>/del')
 @login_required
+@role_required('foreman', 'admin')
 def delete_tool(_id):
 
     """  Remove tool from register.  """
@@ -146,6 +150,7 @@ def delete_tool(_id):
 
 @blueprint.post('/my-tools/<string:_id>/tag')
 @login_required
+@role_required('admin')
 def tag_tool(_id):
 
     """  Tag tool with today's date, within main table."""
@@ -160,11 +165,27 @@ def tag_tool(_id):
 #******************************************************************************
 # Admin View
 @blueprint.get('/all-tools')
+@login_required
+@role_required('foreman', 'admin')
 def all_tools():
-    tools = RegisteredTool.query.all()
-    tool_dict = {tool.id: tool.to_json() for tool in tools}
 
-    return jsonify(tool_dict)
+    #tools = RegisteredTool.query.all()
+    #tool_dict = {tool.id: tool.to_json() for tool in tools}
+    #return jsonify(tool_dict)
+    
+    page_num = request.args.get('page', 1, type=int)
+    show = 5
+    entries = RegisteredTool.query.paginate(page=page_num, per_page=show, error_out=False)
+
+    return render_template('tools/all-tools.html',
+                           admin = True,
+                           title = "Tool Register",
+                           subtitle = "All registered tools.",
+                           tools = entries,
+                           segment=get_segment(request),
+                           page=page_num,
+                           per_page=show
+    )
 
 #******************************************************************************
 # Errors

@@ -54,11 +54,15 @@
                         <span class="pcoded-micon"><i class="feather icon-lock"></i></span><span class="pcoded-mtext">Queries</span>
                     </a>
                     <ul class="pcoded-submenu">
-                        <li class=""><a href={{ url_for('activity_blueprint.view_logbook') }}>Logbook</a></li>
+                        <li class=""><a href={{ url_for('activity_blueprint.all_concretors') }}>Concretors</a></li>
                     </ul>
                     <ul class="pcoded-submenu">
-                        <li class=""><a href={{ url_for('activity_blueprint.all_concretors') }}>All concretors</a></li>
+                        <li class=""><a href={{ url_for('activity_blueprint.view_logbook') }}>RCS Logbook</a></li>
                     </ul>
+                    <ul class="pcoded-submenu">
+                        <li class=""><a href={{ url_for('tools_blueprint.all_tools') }}>Tool Register</a></li>
+                    </ul>
+                    
                 </li>
             </ul>
         </div>

@@ -51,29 +51,21 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="card-footer">
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="card">
-                                                        <div class="card-header">
-                                                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#imageUploadForm" aria-expanded="false" aria-controls="imageUploadForm"><i class="feather icon-camera"></i> Update Picture</button>
-                                                            {% if tool.tool_type == 'corded' %}<!-- Button trigger modal -->
-                                                            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#changeTag"><i class="feather icon-tag"></i> Test & Tag</button>
-                                                            {% endif %}
+                                        <div class="card-block">
+                                            <button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#imageUploadForm" aria-expanded="false" aria-controls="imageUploadForm"><i class="feather icon-camera"></i> Update Picture</button>
+                                            {% if tool.tool_type == 'corded' %}<!-- Button trigger modal -->
+                                            <button type="button" class="btn btn-outline-secondary" data-toggle="modal" data-target="#changeTag"><i class="feather icon-tag"></i> Test & Tag</button>
+                                            {% endif %}
+                                            <div class="collapse" id="imageUploadForm">
+                                                <div class="card-body">
+                                                    <form method="post" enctype="multipart/form-data" action={{ url_for('tools_blueprint.view_tool', _id=tool.id) }}>
+                                                        {{ fileform.hidden_tag() }}
+                                                        <h5>{{ fileform.upload.label }}</h5>
+                                                        <div class="input-group mb-3">
+                                                            {{ fileform.upload(class="form-control-file") }}
                                                         </div>
-                                                        <div class="collapse" id="imageUploadForm">
-                                                            <div class="card-body">
-                                                                <form method="post" enctype="multipart/form-data" action={{ url_for('tools_blueprint.view_tool', _id=tool.id) }}>
-                                                                    {{ fileform.hidden_tag() }}
-                                                                    <h5>{{ fileform.upload.label }}</h5>
-                                                                    <div class="input-group mb-3">
-                                                                        {{ fileform.upload(class="form-control-file") }}
-                                                                    </div>
-                                                                    {{ fileform.submit(class="btn btn-warning btn-round") }}
-                                                                </form>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                        {{ fileform.submit(class="btn btn-warning btn-round") }}
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>

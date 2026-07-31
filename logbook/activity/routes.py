@@ -131,10 +131,21 @@ def view_logbook():
 @blueprint.get('/all-concretors')
 @login_required
 def all_concretors():
-    users = User.query.all()
+
+    page_num = request.args.get('page', 1, type=int)
+    show = 5    
+    concretors = User.query.paginate(page=page_num, per_page=show, error_out=False)
+
     return render_template('logbook/concretors.html',
-                           concretors=users,
-                           admin=False)
+                           admin = True,
+                           title = "All Concretors",
+                           subtitle = "All registered concretors.",
+                           entries = concretors,
+                           segment=get_segment(request),
+                           page=page_num,
+                           per_page=show
+    )
+
 
 #******************************************************************************
 # API
