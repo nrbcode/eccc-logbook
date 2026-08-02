@@ -113,19 +113,16 @@ def view_logbook():
 
     """    Table of pre-start records.    """
     page_num = request.args.get('page', 1, type=int)
-    #entries = LogEntry.query.all()
-    entries = LogEntry.query.paginate(page=page_num, per_page=10, error_out=False)
+    show = 10
+    entries = LogEntry.query.paginate(page=page_num, per_page=show, error_out=False)
 
-    # Detect the current page
-    segment = get_segment(request)
-    
     return render_template(
         'logbook/index.html',
-        segment=segment,
-        entries=entries,
-        admin=True,
-        page=page_num,
-        per_page=10
+        segment = 'query',
+        entries = entries,
+        admin = True,
+        page = page_num,
+        per_page = show
     )
 
 @blueprint.get('/all-concretors')
@@ -141,9 +138,9 @@ def all_concretors():
                            title = "All Concretors",
                            subtitle = "All registered concretors.",
                            entries = concretors,
-                           segment=get_segment(request),
-                           page=page_num,
-                           per_page=show
+                           segment = 'query',
+                           page = page_num,
+                           per_page = show
     )
 
 

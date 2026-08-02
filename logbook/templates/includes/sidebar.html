@@ -49,8 +49,8 @@
                     <label>Admin Pages</label>
                 </li>
                 <li data-username="admin database actions"
-                    class="nav-item pcoded-hasmenu">
-                    <a href="javascript:" class="nav-link ">
+                    class="nav-item pcoded-hasmenu {% if 'query' in segment %} active {% endif %}">
+                    <a href="javascript:" class="nav-link">
                         <span class="pcoded-micon"><i class="feather icon-lock"></i></span><span class="pcoded-mtext">Queries</span>
                     </a>
                     <ul class="pcoded-submenu">
@@ -61,8 +61,7 @@
                     </ul>
                     <ul class="pcoded-submenu">
                         <li class=""><a href={{ url_for('tools_blueprint.all_tools') }}>Tool Register</a></li>
-                    </ul>
-                    
+                    </ul>                    
                 </li>
             </ul>
         </div>

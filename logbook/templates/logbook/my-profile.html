@@ -1,4 +1,4 @@
-{% extends "layouts/base.html" %}
+{% extends "layouts/base-nav.html" %}
 
 {% block title %} Profile {% endblock %} 
 
@@ -20,10 +20,9 @@
                                     <div class="page-header-title">
                                         <h5 class="m-b-10">My Profile</h5>
                                     </div>
-                                    <ul class="breadcrumb">
-                                        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
-                                        <li class="breadcrumb-item">My Profile</li>
-                                    </ul>
+                                </div>
+                                <div class="col-auto text-right">
+                                    <a class="btn btn-outline-secondary m-t-5" href="my-profile/edit" role="button">Edit My Profile</a>
                                 </div>
                             </div>
                         </div>
@@ -72,7 +71,7 @@
                                                     <h5 class="m-0">Profile details</h5>
                                                 </div>
                                                 <div class="col-auto">
-                                                    <a title="Edit your profile here." class="h6 text-muted d-block m-1" data-toggle="tooltip" aria-controls="profileTooltip">
+                                                    <a title="View your profile here." class="h6 text-muted d-block m-1" data-toggle="tooltip" aria-controls="profileTooltip">
                                                         <i class="icon feather icon-help-circle"></i>
                                                     </a>
                                                 </div>
@@ -97,10 +96,7 @@
                                                 <dd class="col-sm-9">{{ current_user.role }}</dd>
                                             </dl>
                                         </div>
-
-                                        <div class="card-footer">
-                                            <a class="btn btn-primary m-t-5" href={{ url_for('activity_blueprint.edit_profile') }} role="button" aria-controls="editProfile">Edit profile</a>
-                                        </div>
+                                        
                                     </div>
                                 </div>
                             </div>

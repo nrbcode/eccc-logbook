@@ -58,6 +58,7 @@ def add_tool():
         
         #return jsonify(tool.to_json())
         tool.save()
+
         return redirect(url_for('.index'))
 
     return render_template('tools/register-tool.html', toolform=addTool)
@@ -122,7 +123,6 @@ def view_tool(_id):
         newTag = CordedToolTag(**newTag)# without init() all parameters must be supplied
         newTag.save()
         tool.update_tag(newTag.id)
-        print("Success! New tag created!", newTag)
 
         return redirect(url_for('.view_tool', _id=_id))
 
@@ -182,7 +182,7 @@ def all_tools():
                            title = "Tool Register",
                            subtitle = "All registered tools.",
                            tools = entries,
-                           segment=get_segment(request),
+                           segment='query',
                            page=page_num,
                            per_page=show
     )

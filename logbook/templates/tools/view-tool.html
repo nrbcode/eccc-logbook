@@ -36,18 +36,19 @@
                                     <div class="card">
                                         <div class="card-header">
                                             <h5>View Tool</h5>
-                                            <span class="d-block m-t-5">view a tool in the <code>tool register</code> here</span>
+                                            <span class="d-block m-t-5">Registered Tool: <code>{{ tool }}</code></span>
                                         </div>
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-md-4">
                                                     <img style="width:130px;" alt="tool image"
-                                                         src={{ url | default(config.ASSETS_ROOT + "/images/tool-default.jpg", true) }} class="img-fluid"><br />
+                                                         src={{ url | default(config.ASSETS_ROOT + "/images/tool-default.jpg", true) }} class="img-fluid">
                                                 </div>
                                                 <div class="col-md-4">
                                                     <p>{{ tool }}</p>
-                                                    {% if tag %}<p>{{ tag }}</p>{% endif %}
-                                                    {% if url %}<a href={{ url }}><code>cloud image</code></a>{% else %}Image not provided.{% endif %}<br />
+                                                    {% if tag %}<p>{{ tag }}</p>{% else %}<p>Tool Number {{ tool.id }}</p>{% endif %}
+                                                    <p>Model number {{ tool.model_number }}</p>
+                                                    {% if url %}<a href={{ url }}><code>cloud image</code></a>{% else %}Image not provided.{% endif %}
                                                 </div>
                                             </div>
                                         </div>

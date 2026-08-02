@@ -1,4 +1,4 @@
-{% extends "layouts/base.html" %}
+{% extends "layouts/base-nav.html" %}
 
 {% from '/includes/form-macros.html' import render_pagination %}
 
@@ -49,9 +49,20 @@
                                         <h5>{{ title }}</h5>
                                         <span class="d-block m-t-5">{{ subtitle }}</span>
                                     </div>
+
+                                    <div class="card-block">
+                                        <div class="row justify-content-center">
+                                            <div class="col-sm-6">
+                                                <label>Filter by brand name...</label>
+                                                <input type="text" id="search-table" class="form-control mb-4" placeholder="search . . ">
+                                            </div>
+                                        </div>
+                                        <div class="i-main" id="icon-wrapper"></div>
+                                    </div>
+
                                     <div class="card-body table-border-style">
                                         <div class="table-responsive">
-                                            <table class="table">
+                                            <table class="table" id="data-table">
                                                 <thead>
                                                     <tr>
                                                         <th>ID</th>
@@ -93,4 +104,20 @@
 {% endblock content %}
 
 <!-- Specific Page JS goes HERE  -->
-{% block javascripts %}{% endblock javascripts %}
+{% block javascripts %}
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#search-table").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            // Toggle row visibility based on a partial text match
+            $("#data-table tbody tr").filter(function () {
+                // Find the cell in the specific column index (e.g., 0 for the 1st column)
+                var cellText = $(this).find("td:eq(0)").text().toLowerCase();
+                $(this).toggle(cellText.indexOf(value) > -1);
+            });
+        });
+    });
+
+</script>
+{% endblock javascripts %}
