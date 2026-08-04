@@ -18,6 +18,7 @@ POWER_TOOLS = [
     ('impact driver', 'Impact Driver'),
     ('vibrator', 'Vibrator motor'),
     ('power trowel', 'Power Trowel Machine'),
+    ('power screed', 'Vibrating Power Screed'),
     ('vacuum', 'Vacuum'),
     ('lead', 'Electric Lead'),
     ('RCD', 'RCD Power Board'),
