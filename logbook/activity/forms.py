@@ -1,13 +1,20 @@
 # -*- encoding: utf-8 -*-
 """
-Copyright (c) 2019 - present AppSeed.us
+Copyright (c) 2019 - present softpowerware
 """
 
-#from wsgiref.validate import validator
 from flask_wtf import FlaskForm
-from wtforms import StringField, DateField, TextAreaField, SubmitField
+from wtforms import StringField, DateField, TextAreaField, SubmitField, SelectMultipleField, widgets
 from wtforms.validators import InputRequired, DataRequired
 from wtforms.fields import RadioField
+
+
+class MultiCheckboxField(SelectMultipleField):
+    """
+    A multiple-select, displaying a list of checkboxes.
+    """
+    widget = widgets.ListWidget(prefix_label=True)
+    option_widget = widgets.CheckboxInput()
 
 
 class LogbookForm(FlaskForm):
@@ -17,8 +24,8 @@ class LogbookForm(FlaskForm):
     job_task = RadioField("Work Activity",
                          choices=[('floor grinder', 'Walk-behind Grinder'), ('hand grinder', 'Hand Grinder'), ('jackhammer', 'Jackhammer'), ('drill', 'Drill into Concrete')],
                          validators=[InputRequired()])
+    controls_list = MultiCheckboxField("Control Measures Used")
     submit_entry = SubmitField('Submit')
-    #checklist = FieldList(StringField("Controls"))
 
 class EditProfileForm(FlaskForm):
     firstname = StringField('FirstName',

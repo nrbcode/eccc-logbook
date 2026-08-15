@@ -48,121 +48,115 @@
                                     </ul>
                                     <div class="tab-content Recent-Users" id="myTabContent">
                                         <div class="tab-pane fade" id="battery" role="tabpanel" aria-labelledby="battery-tab">
-                                            <div class="table-responsive">
-                                                <table class="table table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Tool</th>
-                                                            <th>Added</th>
-                                                            <th scope="col">&nbsp;</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Tool</th>
+                                                        <th>Added</th>
+                                                        <th scope="col">&nbsp;</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
 
-                                                        {% for tool in tools if tool.tool_type=="battery" %}
-                                                        <tr>
-                                                            <td>
-                                                                <h6 class="m-0">{{ tool.brand_name }}</h6>
-                                                                <p class="m-0">{{ tool.model_number }}</p>
-                                                                <p class="m-0">{{ tool.tool_name }}</p>
-                                                            </td>
-                                                            <td>
-                                                                <h6 class="m-0 text-c-blue">{{ tool.added_at.strftime('%d/%m/%Y') }}</h6>
-                                                            </td>
-                                                            <td>
-                                                                <a href={{ url_for('.view_tool', _id=tool.id) }} class="label theme-bg text-white f-12">View Tool</a>
-                                                            </td>
-                                                        </tr>
-                                                        {% endfor %}
+                                                    {% for tool in tools if tool.tool_type=="battery" %}
+                                                    <tr>
+                                                        <td>
+                                                            <h6 class="m-0">{{ tool.brand_name }}</h6>
+                                                            <p class="m-0">{{ tool.model_number }}</p>
+                                                            <p class="m-0">{{ tool.tool_name }}</p>
+                                                        </td>
+                                                        <td>
+                                                            <h6 class="m-0 text-c-blue">{{ tool.added_at.strftime('%d/%m/%Y') }}</h6>
+                                                        </td>
+                                                        <td>
+                                                            <a href={{ url_for('.view_tool', _id=tool.id) }} class="label theme-bg text-white f-12">View</a>
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
 
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                </tbody>
+                                            </table>
                                         </div>
 
                                         <!-- corded tools -->
                                         <div class="tab-pane fade active show" id="corded" role="tabpanel" aria-labelledby="corded-tab">
-                                            <div class="table-responsive">
-                                                <table class="table table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Tool</th>
-                                                            <th>Tagged</th>
-                                                            <th scope="col">&nbsp;</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Tool</th>
+                                                        <th>Tagged</th>
+                                                        <th scope="col">&nbsp;</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
 
-                                                        {% for tool in tools if tool.tool_type=="corded" %}
-                                                        <tr>
-                                                            <td>
-                                                                <h6 class="m-0">{{ tool.brand_name }}</h6>
-                                                                <p class="m-0">{{ tool.model_number }}</p>
-                                                                <p class="m-0">{{ tool.tool_name }}</p>
-                                                            </td>
-                                                            <td>
-                                                                {% if not tags[tool.id] %}
-                                                                No tag!
-                                                                {% elif (datetimenow-tags[tool.id].tag_date).days < 77 %}
-                                                                <i class="fas fa-circle text-success f-10"></i>
-                                                                <p class="text-success mb-1">
-                                                                    {{ tags[tool.id].tag_date.strftime('%d/%m/%Y') }}
-                                                                </p>
-                                                                {% elif (datetimenow-tags[tool.id].tag_date).days < 90 %}
-                                                                <i class="fas fa-circle text-warning f-10"></i>
-                                                                <p class="text-warning mb-1">
-                                                                    {{ tags[tool.id].tag_date.strftime('%d/%m/%Y') }}
-                                                                </p>
-                                                                {% else %}
-                                                                <i class="fas fa-circle text-danger f-10"></i>
-                                                                <p class="text-danger mb-1">
-                                                                    {{ tags[tool.id].tag_date.strftime('%d/%m/%Y') }}
-                                                                </p>
-                                                                {% endif %}
-                                                            </td>
-                                                            <td>
-                                                                <a href={{ url_for('.view_tool', _id=tool.id) }} class="label theme-bg text-white f-12">View Tool</a>
-                                                            </td>
-                                                        </tr>
-                                                        {% endfor %}
+                                                    {% for tool in tools if tool.tool_type=="corded" %}
+                                                    <tr>
+                                                        <td>
+                                                            <h6 class="m-0">{{ tool.brand_name }}</h6>
+                                                            <p class="m-0">{{ tool.model_number }}</p>
+                                                            <p class="m-0">{{ tool.tool_name }}</p>
+                                                        </td>
+                                                        <td>
+                                                            {% if not tags[tool.id] %}
+                                                            No tag!
+                                                            {% elif (datetimenow-tags[tool.id].tag_date).days < 77 %}
+                                                            <i class="fas fa-circle text-success f-10"></i>
+                                                            <p class="text-success mb-1">
+                                                                {{ tags[tool.id].tag_date.strftime('%d/%m/%Y') }}
+                                                            </p>
+                                                            {% elif (datetimenow-tags[tool.id].tag_date).days < 90 %}
+                                                            <i class="fas fa-circle text-warning f-10"></i>
+                                                            <p class="text-warning mb-1">
+                                                                {{ tags[tool.id].tag_date.strftime('%d/%m/%Y') }}
+                                                            </p>
+                                                            {% else %}
+                                                            <i class="fas fa-circle text-danger f-10"></i>
+                                                            <p class="text-danger mb-1">
+                                                                {{ tags[tool.id].tag_date.strftime('%d/%m/%Y') }}
+                                                            </p>
+                                                            {% endif %}
+                                                        </td>
+                                                        <td>
+                                                            <a href={{ url_for('.view_tool', _id=tool.id) }} class="label theme-bg text-white f-12">View</a>
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
 
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                </tbody>
+                                            </table>
                                         </div>
 
                                         <!-- petrol powered tools -->
                                         <div class="tab-pane fade" id="petrol" role="tabpanel" aria-labelledby="petrol-tab">
-                                            <div class="table-responsive">
-                                                <table class="table table-hover">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Tool</th>
-                                                            <th>Added</th>
-                                                            <th scope="col">&nbsp;</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
+                                            <table class="table table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Tool</th>
+                                                        <th>Added</th>
+                                                        <th scope="col">&nbsp;</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
 
-                                                        {% for tool in tools if tool.tool_type=="petrol" %}
-                                                        <tr>
-                                                            <td>
-                                                                <h6 class="m-0">{{ tool.brand_name }}</h6>
-                                                                <p class="m-0">{{ tool.model_number }}</p>
-                                                                <p class="m-0">{{ tool.tool_name }}</p>
-                                                            </td>
-                                                            <td>
-                                                                <h6 class="m-0 text-c-blue">{{ tool.added_at.strftime('%d/%m/%Y') }}</h6>
-                                                            </td>
-                                                            <td>
-                                                                <a href={{ url_for('.view_tool', _id=tool.id) }} class="label theme-bg text-white f-12">View Tool</a>
-                                                            </td>
-                                                        </tr>
-                                                        {% endfor %}
+                                                    {% for tool in tools if tool.tool_type=="petrol" %}
+                                                    <tr>
+                                                        <td>
+                                                            <h6 class="m-0">{{ tool.brand_name }}</h6>
+                                                            <p class="m-0">{{ tool.model_number }}</p>
+                                                            <p class="m-0">{{ tool.tool_name }}</p>
+                                                        </td>
+                                                        <td>
+                                                            <h6 class="m-0 text-c-blue">{{ tool.added_at.strftime('%d/%m/%Y') }}</h6>
+                                                        </td>
+                                                        <td>
+                                                            <a href={{ url_for('.view_tool', _id=tool.id) }} class="label theme-bg text-white f-12">View</a>
+                                                        </td>
+                                                    </tr>
+                                                    {% endfor %}
 
-                                                    </tbody>
-                                                </table>
-                                            </div>
+                                                </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>

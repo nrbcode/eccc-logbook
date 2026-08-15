@@ -4,6 +4,7 @@ from flask_login import current_user
 
 # Role based access control
 def role_required(*role):
+
     def decorator(f):
         @wraps(f)
         def decorated_function(*args, **kwargs):
@@ -17,7 +18,6 @@ def role_required(*role):
 def get_segment(request):
 
     try:
-
         segment = request.path.split('/')[-1]
 
         if segment == '':

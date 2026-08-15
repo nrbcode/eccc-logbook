@@ -1,0 +1,101 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Forms {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+
+                    <!-- [ breadcrumb ] start -->
+                    <div class="page-header">
+                        <div class="page-block">
+                            <div class="row align-items-center">
+                                <div class="col-md-12">
+                                    <div class="page-header-title">
+                                        <h5 class="m-b-10">Training and Testing</h5>
+                                    </div>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                        <li class="breadcrumb-item"><a href="/training">Training</a></li>
+                                        <li class="breadcrumb-item">Add Training</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ breadcrumb ] end -->
+
+                    <div class="main-body">
+                        <div class="page-wrapper">
+
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <form role="form" action={{ url_for('training_blueprint.add_training', _id=course.id) }} method="post">
+                                            <div class="card-header">
+                                                <h5>Add New Training Event</h5>
+                                                <p>{{ course }}</p>
+                                            </div>
+
+                                            {{ form.hidden_tag() }}
+
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            {{ form.date.label }}
+                                                            {{ form.date(placeholder="dd/mm/yyyy", class="form-control") }}
+                                                            <small class="form-text text-muted">Title of the training, may include codename.</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            {{ form.location.label }}
+                                                            {{ form.location(placeholder="Training location", class="form-control") }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                Choose learners for this course
+                                                <div class="custom-control custom-checkbox">
+                                                    <div class="row">
+                                                        {% for cid, cname in learners %}
+                                                        <div class="col-md-6">
+                                                            <input type="checkbox" class="custom-control-input" id={{ cname }} name="students" value={{ cid }}>
+                                                            <label class="custom-control-label" for={{ cname }}>{{ cname }}</label>
+                                                        </div>
+                                                        {% endfor %}
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="card-footer">
+                                                {{ form.submit(class="btn btn-primary") }}
+                                            </div>
+                                        </form>
+                                        
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- [ Main Content ] end -->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

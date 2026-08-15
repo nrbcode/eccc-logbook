@@ -11,10 +11,11 @@ from . import blueprint
 from .forms import LogbookForm, EditProfileForm
 from .models import LogEntry
 
-#import logbook
-from logbook.constants import CONTROL_MEASURES#, COURSE_LIST
+# import logbook
+from logbook.constants import CONTROL_MEASURES
 from logbook.utilities import get_segment, role_required
 from logbook.authentication.models import User
+from logbook.training.models import Training
 
 #******************************************************************************
 # GUI views
@@ -41,6 +42,7 @@ def new_logbook_entry():
     """    Record new safety checklist.   """
     
     logbook_entry = LogbookForm(request.form)
+    logbook_entry.controls_list.choices = CONTROL_MEASURES
     
     if logbook_entry.validate_on_submit():
 
@@ -49,7 +51,7 @@ def new_logbook_entry():
             "date": logbook_entry.job_date.data,
             "activity": logbook_entry.job_task.data,
             "duration": float(request.form.get("job_duration")),
-            "controls": '; '.join(request.form.getlist("controls")),
+            "controls": '; '.join(logbook_entry.controls_list.data),
             "concretor_id": current_user.id
             }
         
@@ -59,7 +61,6 @@ def new_logbook_entry():
         return redirect(url_for('.my_logbook'))
     
     return render_template('logbook/new-entry.html',
-                           controls = CONTROL_MEASURES,
                            segment = 'logbook',
                            datetimenow = datetime.now(),
                            form = logbook_entry)
@@ -68,8 +69,10 @@ def new_logbook_entry():
 @login_required
 def my_profile():
     
+    courses = Training.query.all()
     return render_template('logbook/my-profile.html',
-                           segment=get_segment(request)
+                           segment = get_segment(request),
+                           training = courses
                            )
 
 @blueprint.route('/my-profile/edit', methods=['GET', 'POST'])

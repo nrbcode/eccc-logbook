@@ -169,10 +169,6 @@ def tag_tool(_id):
 @role_required('foreman', 'admin')
 def all_tools():
 
-    #tools = RegisteredTool.query.all()
-    #tool_dict = {tool.id: tool.to_json() for tool in tools}
-    #return jsonify(tool_dict)
-    
     page_num = request.args.get('page', 1, type=int)
     show = 5
     entries = RegisteredTool.query.paginate(page=page_num, per_page=show, error_out=False)

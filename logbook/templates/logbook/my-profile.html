@@ -96,9 +96,32 @@
                                                 <dd class="col-sm-9">{{ current_user.role }}</dd>
                                             </dl>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
+                                <!--[ Courses and Training ] start-->
+                                <div class="col-sm-8">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>Training Journal</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            {% for event in training %}
+                                            {% for student in event.students %}
+                                            {% if student.student_id==current_user.id %}
+                                            <dl class="dl-horizontal row">
+                                                <dt class="col-sm-3">Training</dt>
+                                                <dd class="col-sm-9">{{ event }}</dd>
+                                                <dt class="col-sm-3">Completed</dt>
+                                                <dd class="col-sm-9">{{ student.is_complete }}</dd>
+                                            </dl>
+                                            {% endif %}
+                                            {% endfor %}
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--[ Courses and Training ] end-->
                             </div>
                             <!-- [ Main Content ] end -->
                         </div>

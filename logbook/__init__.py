@@ -23,7 +23,7 @@ def register_extensions(app):
     lm.init_app(app)
 
 def register_blueprints(app):
-    for module_name in ('authentication', 'activity', 'tools'):
+    for module_name in ('authentication', 'activity', 'tools', 'training'):
         module = import_module('logbook.{}.routes'.format(module_name))
         app.register_blueprint(module.blueprint)
 

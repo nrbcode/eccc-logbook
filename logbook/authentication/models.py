@@ -28,7 +28,6 @@ class User(db.Model, UserMixin):
     address       = db.Column(db.String(64), nullable=True)
     bio           = db.Column(db.String(64), nullable=True)
     created_at    = db.Column(db.DateTime, server_default=func.now())
-    #created_at    = db.Column(db.DateTime)
     is_verified   = db.Column(db.Boolean, default=False) # Email verification status
     role          = db.Column(db.String(50), nullable=False, default='concretor') # concretor; foreman; admin; webmaster
 
@@ -90,6 +89,11 @@ class User(db.Model, UserMixin):
     @classmethod
     def find_all(cls):
         return cls.query.all()
+
+    @classmethod
+    def select_learners(cls, students):
+        '''Retrieve students from selected concretors.'''
+        return db.session.scalars(db.select(cls).where(cls.id.in_(students)))
     
     def save(self) -> None:
         try:

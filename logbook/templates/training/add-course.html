@@ -1,0 +1,87 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Forms {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+                    <!-- [ breadcrumb ] start -->
+                    <div class="page-header">
+                        <div class="page-block">
+                            <div class="row align-items-center">
+                                <div class="col-md-12">
+                                    <div class="page-header-title">
+                                        <h5 class="m-b-10">Training and Testing</h5>
+                                    </div>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                        <li class="breadcrumb-item"><a href="/training">Training</a></li>
+                                        <li class="breadcrumb-item">Add Course</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ breadcrumb ] end -->
+                    <div class="main-body">
+                        <div class="page-wrapper">
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>Add New Course</h5>
+                                        </div>
+                                        <div class="card-body">
+                                            <form role="form" action="/training/add-course" method="post">
+                                                
+                                                {{ form.hidden_tag() }}
+                                                
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            {{ form.name.label }}
+                                                            {{ form.name(placeholder="Training name/code", class="form-control") }}
+                                                            <small class="form-text text-muted">Title of the training, may include codename.</small>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            {{ form.duration.label }}
+                                                            {{ form.duration(value=1, class="form-control") }}
+                                                            <small class="form-text text-muted">Number of days, less than one day should be entered as 1.</small>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="form-group">
+                                                            {{ form.provider.label }}
+                                                            {{ form.provider(placeholder="Training provider", class="form-control") }}
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                {{ form.submit(class="btn btn-primary") }}
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- [ Main Content ] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

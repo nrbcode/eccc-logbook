@@ -1,0 +1,84 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Training {% endblock %} 
+
+<!-- Specific CSS goes HERE -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <!-- [ Main Content ] start -->
+    <div class="pcoded-main-container">
+        <div class="pcoded-wrapper">
+            <div class="pcoded-content">
+                <div class="pcoded-inner-content">
+
+                    <!-- [ breadcrumb ] start -->
+                    <div class="page-header">
+                        <div class="page-block">
+                            <div class="row align-items-center">
+                                <div class="col-md-12">
+                                    <div class="page-header-title">
+                                        <h5 class="m-b-10">{{ coursename }} - Enrolments</h5>
+                                    </div>
+                                    <ul class="breadcrumb">
+                                        <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
+                                        <li class="breadcrumb-item"><a href="/training">Training</a></li>
+                                        <li class="breadcrumb-item">View Training</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- [ breadcrumb ] end -->
+
+                    <div class="main-body">
+                        <div class="page-wrapper">
+
+                            <!-- [ Main Content ] start -->
+                            <div class="row">
+                                {% for event in training %}
+
+                                <!-- [ rating list ] starts-->
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-header">
+                                            <h5>{{ event.date.strftime('%d/%m/%Y') }}</h5> {{ event.provider }}
+                                        </div>
+                                        <div class="card-block">
+                                            <dl class="dl-horizontal row">
+                                                <dt class="col-sm-3">Location</dt>
+                                                <dd class="col-sm-9">{{ event.location }}</dd>
+                                                <dt class="col-sm-3">Provider</dt>
+                                                <dd class="col-sm-9">{{ event.provider }}</dd>
+                                            </dl>
+                                        </div>
+                                        <div class="card-block">
+                                            <h5>Students enrolled:</h5>
+                                            <ol>
+                                                {% for student in event.students %}
+                                                <li>
+                                                    {{ student.learner.username }} {{ student.is_complete }}
+                                                </li>
+                                                {% endfor %}
+                                            </ol>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- [ rating list ] end-->
+                                {% endfor %}
+                            </div>
+                            <!-- [ Main Content] end -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- [ Main Content ] end -->
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
