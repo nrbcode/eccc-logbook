@@ -8,7 +8,7 @@ CONTROL_MEASURES = [
     'Tools are safe and ready for use',
     'Due consideration given to other work groups in the vicinity',
 ]
-# power tool (name, display name)
+# power tool (stored name, displayed name)
 POWER_TOOLS = [
     ('floor grinder', 'Stand Up Grinder'),
     ('hand grinder', 'Hand Grinder'),
@@ -20,25 +20,15 @@ POWER_TOOLS = [
     ('power screed', 'Vibrating Power Screed'),
     ('vacuum', 'Vacuum'),
     ('lead', 'Electric Lead'),
-    ('RCD', 'RCD Power Board'),
+    ('rcd', 'RCD Power Board'),
     ('charger', 'Battery Charger'),
     ('laser', 'Rotary Laser Level')
 ]
-# tool types (name, display name)
+# tool types (stored name, displayed name)
 TOOL_TYPES = [
     ('battery', 'Rechargeable Battery'),
     ('corded', 'Corded Power Tool'),
     ('petrol', 'Petrol Power Tool')
-]
-# training (course name, provider)
-COURSE_LIST = [
-    ("Elevated Work Platform", "Construction Skills & Training"),
-    ("First Aid", "Saint John's Ambulance"),
-    ("Workplace Impairment Training", "CFMEU"),
-    ("Respirable Crystalline Silica Awareness", "Construction Skills & Training"),
-    ("Health and Safety Representative", "Construction Skills & Training"),
-    ("Electrical Test and Tag", "Construction Skills & Training"),
-    ("RPE Fit Testing", "JHG NTH")
 ]
 # work activities (short name, long name)
 WORK_ACTIVITIES = [
@@ -47,9 +37,10 @@ WORK_ACTIVITIES = [
     ('jackhammer', 'Jackhammer'),
     ('drill', 'Drill into Concrete')
 ]
-# (project name, principle contractor)
+# (stored name, displayed name)
 JOB_SITES = [
-    ('Queens Wharf', 'Far East Consortium'),
-    ('New Toowoomba Hospital', 'John Holland Group')
+    ('fec-qw', 'Queens Wharf Towers 5 & 6 - Far East Consortium'),
+    ('jhg-nth', 'New Toowoomba Hospital - John Holland Group'),
+    ('jhg-lhs2', 'Logan Hospital - John Holland Group')
 ]
     

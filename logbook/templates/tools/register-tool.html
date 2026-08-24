@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %}Tool Register{% endblock %} 
+{% block title %} New Tool {% endblock %} 
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -50,12 +50,12 @@
                                                 <div class="row">
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            {{ toolform.brand_name.label }}
-                                                            {{ toolform.brand_name(placeholder="Brand name", class="form-control") }}
+                                                            {{ toolform.brand.label }}
+                                                            {{ toolform.brand(placeholder="Brand name", class="form-control") }}
                                                         </div>
                                                         <div class="form-group">
-                                                            {{ toolform.model_number.label }}
-                                                            {{ toolform.model_number(placeholder="Model number/code", class="form-control") }}
+                                                            {{ toolform.model.label }}
+                                                            {{ toolform.model(placeholder="Model number/code", class="form-control") }}
                                                         </div>
 
                                                         <!-- start wtform radio -->
@@ -71,16 +71,20 @@
                                                     </div>
                                                     <div class="col-md-6">
                                                         <div class="form-group">
-                                                            {{ toolform.tool_name.label }}
-                                                            {{ toolform.tool_name(class="form-control")}}
+                                                            {{ toolform.tool.label }}
+                                                            {{ toolform.tool(class="form-control")}}
                                                         </div>
                                                         <div class="form-group">
-                                                            {{ toolform.serial_num.label }}
-                                                            {{ toolform.serial_num(class="form-control", placeholder="321abc...") }}
+                                                            {{ toolform.serial.label }}
+                                                            {{ toolform.serial(class="form-control", placeholder="321abc...") }}
+                                                        </div>
+                                                        <div class="form-group">
+                                                            {{ toolform.hilti.label }}
+                                                            {{ toolform.hilti(class="form-control", placeholder="Hilti Tracking Number...") }}
                                                         </div>
                                                         <div class="form-group">
                                                             {{ toolform.notes.label }}
-                                                            {{ toolform.notes(class="form-control",  rows="3", placeholder="Hilti tracking number,\nCondition,\nMarkings etc.") }}
+                                                            {{ toolform.notes(class="form-control",  rows="3", placeholder="Condition,\nMarkings,\nService Record etc.") }}
                                                         </div>
                                                     </div>
                                                 </div>

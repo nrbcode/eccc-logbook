@@ -41,11 +41,12 @@ def add_tool():
 
     if addTool.validate_on_submit():
         newTool = {
-            "brand_name": addTool.brand_name.data,
-            "model_number": addTool.model_number.data,
-            "tool_name": addTool.tool_name.data,
+            "brand_name": addTool.brand.data,
+            "model_number": addTool.model.data,
+            "tool_name": addTool.tool.data,
             "tool_type": addTool.tool_type.data,
-            "serial_number": addTool.serial_num.data,
+            "serial_num": addTool.serial.data,
+            "ht_num": addTool.hilti.data,
             "tool_notes": addTool.notes.data,
             "added_by": current_user.id
         }

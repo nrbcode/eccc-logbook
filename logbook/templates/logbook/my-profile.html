@@ -112,8 +112,12 @@
                                             <dl class="dl-horizontal row">
                                                 <dt class="col-sm-3">Training</dt>
                                                 <dd class="col-sm-9">{{ event }}</dd>
-                                                <dt class="col-sm-3">Completed</dt>
-                                                <dd class="col-sm-9">{{ student.is_complete }}</dd>
+                                                <dt class="col-sm-3">Attendance</dt>
+                                                <dd class="col-sm-9">
+                                                {% if student.is_complete %}<i class="fas fa-circle text-c-green f-10 m-r-15"></i>Complete
+                                                {% else %}<i class="fas fa-circle text-c-yellow f-10 m-r-15"></i>Not complete
+                                                {% endif %}
+                                                </dd>
                                             </dl>
                                             {% endif %}
                                             {% endfor %}

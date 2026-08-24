@@ -1,4 +1,4 @@
-{% extends "layouts/base.html" %}
+{% extends "layouts/base-nav.html" %}
 
 {% block title %} Training {% endblock %} 
 
@@ -28,7 +28,7 @@
                                 </div>
                                 {% if current_user.role == "admin" %}
                                 <div class="col-auto text-right">
-                                    <a class="btn btn-outline-secondary m-t-5" href="add-course" role="button">Add New Course</a>
+                                    <a class="btn btn-outline-secondary m-t-5" href="add-course" role="button">Add Course</a>
                                 </div>
                                 {% endif %}
                             </div>
@@ -62,18 +62,20 @@
                                                         <tr class="unread">
                                                             <td>
                                                                 <h6 class="mb-1">{{ course }}</h6>
-                                                                <p class="m-0">{{ course.provider }}</p>
                                                             </td>
                                                             <td>
                                                                 <h6 class="text-muted">
-                                                                    <i class="fas fa-circle text-c-green f-10 m-r-15"></i>
-                                                                    {{ course.duration }}
+                                                                    {{ course.duration }}day(s)
                                                                 </h6>
                                                             </td>
                                                             <td>
-                                                                <a href={{ url_for('.view_training', name=course.name) }} class="label theme-bg text-white f-12">View</a>
+                                                                <a href={{ url_for('.view_training', courseid=course.id) }} 
+                                                                   class="label theme-bg2 text-white f-12" 
+                                                                   title="view enrolments">View</a>
                                                                 {% if current_user.role == "admin" %}
-                                                                <a href={{ url_for('.add_training', _id=course.id) }} class="label theme-bg2 text-white f-12">Create</a>
+                                                                <a href={{ url_for('.add_training', _id=course.id) }} 
+                                                                   class="label theme-bg text-white f-12"
+                                                                   title="add event">Add</a>
                                                                 {% endif %}
                                                             </td>
                                                         </tr>

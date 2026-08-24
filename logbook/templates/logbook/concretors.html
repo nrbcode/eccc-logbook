@@ -67,7 +67,7 @@
                                                         <th scope="row">{{ concretor.id }}</th>
                                                         <td>{{ concretor.username }}</td>
                                                         <td>{{ concretor.email }}</td>
-                                                        <td>{{ concretor.created_at }}</td>
+                                                        <td>{{ concretor.created_at.date() }}</td>
                                                         <td>{{ concretor.role }}</td>
                                                     </tr>
                                                     {% endfor %}

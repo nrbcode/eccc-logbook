@@ -23,6 +23,7 @@ class RegisteredTool(db.Model):
     tool_name     = db.Column(db.String(64))
     tool_type     = db.Column(db.String(64))
     serial_num    = db.Column(db.String(64))
+    ht_num        = db.Column(db.String(64)) # Hilti Tracking Number
     tool_notes    = db.Column(db.Text)
     added_at      = db.Column(db.DateTime, server_default=func.now())
     added_by      = db.Column(db.Integer, db.ForeignKey("logbook_users.id"))
@@ -121,7 +122,7 @@ class CordedToolTag(db.Model):
         return f'Tool No.{self.tool_id} tagged {self.tag_date.strftime('%d/%m/%Y')}.'
 
     @classmethod
-    def find_by_toolid(cls, tool: int):
+    def find_by_toolid(cls, tool: int) -> "CordedToolTag":
 
         return db.session.scalar(db.select(cls).filter_by(tool_id=tool).order_by(-cls.id))
 
@@ -154,12 +155,10 @@ class ImagekitFile(db.Model):
     @classmethod
     def find_by_toolbox(cls, toolbox: List):
         '''
-        Take a list of registered tools,
+        Take a list of id numbers for registered tools,
         return pairs with key tool_id and value file_url or None.
         '''
-        #return cls.query.filter_by(register = tool_id).all()
         return db.session.scalars(db.select(cls.file_url).where(cls.tool_id in toolbox))
-        #return db.select(cls.file_id).where(cls.register.in_(rego_nums)).scalars()
 
     @classmethod
     def find_by_toolid(cls, tool: int):
@@ -187,6 +186,7 @@ class ImagekitFile(db.Model):
         #finally:db.session.close()  # Clean up and release the connection resource
 
     def update_image(self, details):
+
         self.file_id = details.get('file_id')
         self.file_url = details.get('file_url')
         self.upload_timestamp = func.now()

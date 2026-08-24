@@ -45,17 +45,7 @@
                         <span class="pcoded-mtext">My Tools</span>
                     </a>
                 </li>
-                <li class="nav-item pcoded-menu-caption">
-                    <label>Admin</label>
-                </li>
-                <li data-username="training"
-                    class="nav-item {% if 'training' in segment %} active {% endif %}">
-                    <a href={{ url_for('training_blueprint.index') }} class="nav-link">
-                        <span class="pcoded-micon"><i class="feather icon-award"></i></span>
-                        <span class="pcoded-mtext">Training</span>
-                    </a>
-                </li>
-                <li data-username="admin database actions"
+                <li data-username="admin queries concretors rcs logbook tool"
                     class="nav-item pcoded-hasmenu {% if 'query' in segment %} active {% endif %}">
                     <a href="javascript:" class="nav-link">
                         <span class="pcoded-micon"><i class="feather icon-layers"></i></span><span class="pcoded-mtext">Queries</span>
@@ -69,6 +59,16 @@
                     <ul class="pcoded-submenu">
                         <li class=""><a href={{ url_for('tools_blueprint.all_tools') }}>Tool Register</a></li>
                     </ul>
+                </li>
+                <li class="nav-item pcoded-menu-caption">
+                    <label>Admin</label>
+                </li>
+                <li data-username="training"
+                    class="nav-item {% if 'training' in segment %} active {% endif %}">
+                    <a href={{ url_for('training_blueprint.index') }} class="nav-link">
+                        <span class="pcoded-micon"><i class="feather icon-award"></i></span>
+                        <span class="pcoded-mtext">Training</span>
+                    </a>
                 </li>
             </ul>
         </div>

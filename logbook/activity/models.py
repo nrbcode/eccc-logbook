@@ -28,7 +28,6 @@ class LogEntry(db.Model, UserMixin):
     duration = db.Column(db.Float, nullable=False)
     controls = db.Column(db.Text)
     created_at = db.Column(db.DateTime)
-    #created_at = db.Column(db.DateTime(timezone=True), server_default=func.now())
 
     def __init__(self, **kwargs):
         for property, value in kwargs.items():
@@ -41,7 +40,7 @@ class LogEntry(db.Model, UserMixin):
         set_attribute(self, "created_at", func.now())
 
     def __repr__(self):
-        return f"CheckList({self.site}, {self.date}, {self.activity})"
+        return f"LogEntry('site'={self.site}, 'date'={self.date}, 'activity'={self.activity})"
 
     def __str__(self):
         return f"{self.job_site}, {self.display_date()}"

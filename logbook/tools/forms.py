@@ -13,21 +13,25 @@ from logbook.constants import POWER_TOOLS, TOOL_TYPES
 
 
 class AddNewTool(FlaskForm):
-    brand_name = StringField("Brand", validators=[InputRequired()])
-    model_number = StringField("Model", validators=[InputRequired()])
-    tool_name = SelectField("Tool Name", choices=POWER_TOOLS, validators=[DataRequired()])
-    tool_type = RadioField("Tool Type", choices=TOOL_TYPES, validators=[DataRequired()])
-    serial_num = StringField("Serial Number")
-    notes = TextAreaField("Extra notes")
-    submit = SubmitField('Register New Tool')
+
+    brand     = StringField("Brand", validators=[InputRequired()])
+    model     = StringField("Model", validators=[InputRequired()])
+    tool      = SelectField("Tool Name",
+                            validators=[DataRequired()], choices=POWER_TOOLS)
+    tool_type = RadioField("Tool Type",
+                           validators=[DataRequired()], choices=TOOL_TYPES)
+    serial    = StringField("Serial Number")
+    hilti     = StringField("Proprietary Tracking Number")
+    notes     = TextAreaField("Extra notes")
+    submit    = SubmitField('Register New Tool')
 
 # upload profile image
 class UploadImageForm(FlaskForm):
 
-    upload = FileField('Update tool picture', validators=[
-        FileRequired(),
-        FileAllowed(['jpg', 'jpeg', 'png'], 'Images only!')
-    ])
+    upload = FileField('Update tool picture',
+                       validators = [
+                           FileRequired(),
+                           FileAllowed(['jpg', 'jpeg', 'png'], 'Images only!')])
     submit = SubmitField('Upload Image')
 
 class ToolTagForm(FlaskForm):

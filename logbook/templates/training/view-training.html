@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Training {% endblock %} 
+{% block title %} View Training {% endblock %} 
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -19,7 +19,7 @@
                             <div class="row align-items-center">
                                 <div class="col-md-12">
                                     <div class="page-header-title">
-                                        <h5 class="m-b-10">{{ coursename }} - Enrolments</h5>
+                                        <h5 class="m-b-10">Enrolments - {{ course.name }}</h5>
                                     </div>
                                     <ul class="breadcrumb">
                                         <li class="breadcrumb-item"><a href="/"><i class="feather icon-home"></i></a></li>
@@ -43,14 +43,19 @@
                                 <div class="col-md-6">
                                     <div class="card">
                                         <div class="card-header">
-                                            <h5>{{ event.date.strftime('%d/%m/%Y') }}</h5> {{ event.provider }}
+                                            <h5>{{ event.date.strftime('%A %d %B %Y') }}</h5>
+                                            {% if datetimenow.day > event.date.day %}
+                                            <i class="fas fa-circle text-success f-10 m-r-15"></i>
+                                            {% else %}
+                                            <i class="fas fa-circle text-warning f-10 m-r-15"></i>
+                                            {% endif %}
                                         </div>
                                         <div class="card-block">
                                             <dl class="dl-horizontal row">
                                                 <dt class="col-sm-3">Location</dt>
                                                 <dd class="col-sm-9">{{ event.location }}</dd>
                                                 <dt class="col-sm-3">Provider</dt>
-                                                <dd class="col-sm-9">{{ event.provider }}</dd>
+                                                <dd class="col-sm-9">{{ course.provider }}</dd>
                                             </dl>
                                         </div>
                                         <div class="card-block">
@@ -58,11 +63,15 @@
                                             <ol>
                                                 {% for student in event.students %}
                                                 <li>
-                                                    {{ student.learner.username }} {{ student.is_complete }}
+                                                    {{ student.learner.username }}. {% if student.is_complete %}Complete{% else %}Not complete{% endif %}.
                                                 </li>
                                                 {% endfor %}
                                             </ol>
-                                            
+                                        </div>
+                                        <div class="card-footer">
+                                            <form class="form-inline" method="post" role="form" action={{ url_for('.mark_training', slug=course.name|slugify, trainingid=event.id) }} >
+                                                <button type="submit" class="btn btn-link" title="confirm attendance">Mark all as complete</button>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>

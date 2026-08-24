@@ -2,7 +2,7 @@
 
 {% from '/includes/form-macros.html' import render_pagination %}
 
-{% block title %}Tool Register{% endblock %}
+{% block title %} Tool Register {% endblock %}
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -53,7 +53,7 @@
                                     <div class="card-block">
                                         <div class="row justify-content-center">
                                             <div class="col-sm-6">
-                                                <label>Filter by brand name...</label>
+                                                <label>Filter by brand or model...</label>
                                                 <input type="text" id="search-table" class="form-control mb-4" placeholder="search . . ">
                                             </div>
                                         </div>
@@ -77,7 +77,7 @@
                                                         <th scope="row">{{ tool.id }}</th>
                                                         <td>{{ tool.brand_name }}</td>
                                                         <td>{{ tool.model_number }}</td>
-                                                        <td>{{ tool.added_at }}</td>
+                                                        <td>{{ tool.added_at.date() }}</td>
                                                     </tr>
                                                     {% endfor %}
                                                 </tbody>
@@ -113,7 +113,10 @@
             // Toggle row visibility based on a partial text match
             $("#data-table tbody tr").filter(function () {
                 // Find the cell in the specific column index (e.g., 0 for the 1st column)
-                var cellText = $(this).find("td:eq(0)").text().toLowerCase();
+                //var cellText = $(this).find("td").inArray(index, [1,2]).text().toLowerCase();
+                //var cellText = $(this).find("td:nth-child(1)").text().toLowerCase();
+                var cellText = $(this).children("td:eq(0), td:eq(1)").text().toLowerCase();
+                //var cellText = $(this).find("td").eq(0).text().toLowerCase();
                 $(this).toggle(cellText.indexOf(value) > -1);
             });
         });

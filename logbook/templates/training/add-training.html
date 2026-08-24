@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} UI Forms {% endblock %} 
+{% block title %} Add Training {% endblock %} 
 
 <!-- Specific CSS goes HERE -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -41,8 +41,8 @@
                                     <div class="card">
                                         <form role="form" action={{ url_for('training_blueprint.add_training', _id=course.id) }} method="post">
                                             <div class="card-header">
-                                                <h5>Add New Training Event</h5>
-                                                <p>{{ course }}</p>
+                                                <h5>{{ course }}</h5>
+                                                <p>Add New Training Event. Students may be selected from registered concretors.</p>
                                             </div>
 
                                             {{ form.hidden_tag() }}

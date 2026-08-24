@@ -12,7 +12,7 @@ from .forms import LogbookForm, EditProfileForm
 from .models import LogEntry
 
 # import logbook
-from logbook.constants import CONTROL_MEASURES
+from logbook.constants import CONTROL_MEASURES, JOB_SITES, WORK_ACTIVITIES
 from logbook.utilities import get_segment, role_required
 from logbook.authentication.models import User
 from logbook.training.models import Training
@@ -43,6 +43,7 @@ def new_logbook_entry():
     
     logbook_entry = LogbookForm(request.form)
     logbook_entry.controls_list.choices = CONTROL_MEASURES
+    logbook_entry.job_task.choices = WORK_ACTIVITIES
     
     if logbook_entry.validate_on_submit():
 
@@ -63,7 +64,8 @@ def new_logbook_entry():
     return render_template('logbook/new-entry.html',
                            segment = 'logbook',
                            datetimenow = datetime.now(),
-                           form = logbook_entry)
+                           form = logbook_entry,
+                           sites = JOB_SITES)
 
 @blueprint.get('/my-profile')
 @login_required
@@ -130,6 +132,7 @@ def view_logbook():
 
 @blueprint.get('/all-concretors')
 @login_required
+@role_required('foreman', 'admin')
 def all_concretors():
 
     page_num = request.args.get('page', 1, type=int)
