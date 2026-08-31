@@ -22,7 +22,8 @@ POWER_TOOLS = [
     ('lead', 'Electric Lead'),
     ('rcd', 'RCD Power Board'),
     ('charger', 'Battery Charger'),
-    ('laser', 'Rotary Laser Level')
+    ('laser', 'Rotary Laser Level'),
+    ('soft cut', 'Soft-Cut Petrol Saw')
 ]
 # tool types (stored name, displayed name)
 TOOL_TYPES = [

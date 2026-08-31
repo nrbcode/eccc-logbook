@@ -39,17 +39,33 @@
                                             <span class="d-block m-t-5">Registered Tool: <code>{{ tool }}</code></span>
                                         </div>
                                         <div class="card-body">
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <img style="width:130px;" alt="tool image"
-                                                         src={{ url | default(config.ASSETS_ROOT + "/images/tool-default.jpg", true) }} class="img-fluid">
+                                            <div class="d-flex align-items-center justify-content-center flex-column">
+                                                <div class="w-50 p-3">
+                                                    <img style="width:130px;" alt="tool image" class="img-fluid"
+                                                         src={{ url | default(config.ASSETS_ROOT + "/images/tool-default.jpg", true) }}>
                                                 </div>
-                                                <div class="col-md-4">
-                                                    <p>{{ tool }}</p>
-                                                    {% if tag %}<p>{{ tag }}</p>{% else %}<p>Tool Number {{ tool.id }}</p>{% endif %}
-                                                    <p>Model number {{ tool.model_number }}</p>
-                                                    {% if url %}<a href={{ url }}><code>cloud image</code></a>{% else %}Image not provided.{% endif %}
-                                                </div>
+                                                <dl class="dl-horizontal row">
+                                                    <dt class="col-sm-3">Tool Number</dt>
+                                                    <dd class="col-sm-9">{{ tool.id }}</dd>
+                                                    {% if tag %}
+                                                    <dt class="col-sm-3">Tag</dt>
+                                                    <dd class="col-sm-9">{{ tag }}</dd>
+                                                    {% endif %}
+                                                    <dt class="col-sm-3">Model</dt>
+                                                    <dd class="col-sm-9">{{ tool.model_number }}</dd>
+                                                    <dt class="col-sm-3">Hilti Tracking</dt>
+                                                    <dd class="col-sm-9">
+                                                        {{ tool.ht_num | default('Not tracked', True) }}
+                                                    </dd>
+                                                    <dt class="col-sm-3">Notes</dt>
+                                                    <dd class="col-sm-9">{{ tool.tool_notes | default('No tool notes', True) }}</dd>
+                                                    <dt class="col-sm-3">Image</dt>
+                                                    {% if url %}
+                                                    <dd class="col-sm-9"><a href={{ url }}><code>cloud image</code></a></dd>
+                                                    {% else %}
+                                                    <dd class="col-sm-9">Image not provided.</dd>
+                                                    {% endif %}
+                                                </dl>
                                             </div>
                                         </div>
                                         <div class="card-block">
@@ -74,7 +90,7 @@
                                         <!-- Modal Content -->
                                         <div class="modal fade" id="changeTag" tabindex="-1" role="dialog" aria-labelledby="changeTagLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
-                                                <form class="form-inline" method=post role="form" action={{ url_for('tools_blueprint.view_tool', _id=tool.id) }} >
+                                                <form class="form-inline" method=post role="form" action={{ url_for('tools_blueprint.view_tool', _id=tool.id) }}>
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title" id="changeTagLabel">Tag Corded Tool {{ tool.tool_name, tool.id }}</h5>
