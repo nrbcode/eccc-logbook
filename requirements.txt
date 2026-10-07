@@ -6,7 +6,7 @@ flask_wtf
 flask-sqlalchemy
 flask-bcrypt
 python-dotenv
-psycopg2-binary
+psycopg
 PyJWT
 resend
 email-validator
