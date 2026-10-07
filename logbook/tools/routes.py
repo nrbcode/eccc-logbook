@@ -71,12 +71,12 @@ def view_tool(_id):
 
     uploadImage = UploadImageForm()
     tagTool = ToolTagForm()
-    if (tool:= RegisteredTool.find_by_id(tool_id=_id)).tool_type == "corded":
-        tool = CordedTool.find_by_id(tool_id=_id)
+    if (tool:= RegisteredTool.find_by_id(tool_id=int(_id))).tool_type == "corded":
+        tool = CordedTool.find_by_id(tool_id=int(_id))
         tag = CordedToolTag.find_by_toolid(tool=tool.id) # should exist for all tools
     else:
         tag = None
-    image = ImagekitFile.find_by_toolid(_id)
+    image = ImagekitFile.find_by_toolid(int(_id))
 
     if uploadImage.validate_on_submit():
         f = uploadImage.upload.data
